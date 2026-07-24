@@ -423,9 +423,9 @@ export const semanticShortcuts = [
   semanticBgShortcut,
   semanticBorderShortcut,
   {
-    'divider-emphasis': 'border-[var(--divider-emphasis)]',
-    'divider-default': 'border-[var(--divider-default)]',
-    'divider-muted': 'border-[var(--divider-muted)]',
-    'divider-quiet': 'border-[var(--divider-quiet)]',
+    'divider-emphasis': 'border-[color:var(--divider-emphasis)]',
+    'divider-default': 'border-[color:var(--divider-default)]',
+    'divider-muted': 'border-[color:var(--divider-muted)]',
+    'divider-quiet': 'border-[color:var(--divider-quiet)]',
   },
 ]

@@ -8,10 +8,10 @@ export const fontSize = {
 }
 
 export const fontWeight = {
-  bold: '630',
-  semibold: '610',
-  medium: '570',
-  regular: '485',
+  bold: '680',
+  semibold: '600',
+  medium: '550',
+  regular: '400',
 }
 
 export const lineHeight = {
@@ -25,12 +25,16 @@ export const letterSpacing = {
 }
 
 export const typographyShortcuts = [{
-  'text-h1': 'text-[length:var(--font-size-h1)] line-height-[var(--line-height-h1)] font-bold',
+  'text-h1': 'text-[length:var(--font-size-h1)] line-height-[var(--line-height-h1)] font-[700]',
   'text-h2': 'text-[length:var(--font-size-h2)] line-height-[var(--line-height-h2)] font-bold',
   'text-h3': 'text-[length:var(--font-size-h3)] line-height-[var(--line-height-h3)] font-bold',
   'text-h4': 'text-[length:var(--font-size-h4)] line-height-[var(--line-height-h4)] font-bold',
   'text-subtitle1': 'text-[length:var(--font-size-subtitle1)] line-height-[var(--line-height-subtitle1)] font-semibold',
   'text-subtitle2': 'text-[length:var(--font-size-subtitle2)] line-height-[var(--line-height-subtitle2)] font-semibold',
+  'text-lg': 'text-[length:var(--font-size-lg)] line-height-[var(--line-height-lg)] font-regular',
+  'text-sm': 'text-[length:var(--font-size-sm)] line-height-[var(--line-height-sm)] font-regular',
+  'text-sm-b': 'text-[length:var(--font-size-sm)] line-height-[var(--line-height-sm)] font-medium',
+  'text-xs': 'text-[length:var(--font-size-xs)] line-height-[var(--line-height-xs)] font-regular',
 }]
 
 export const breakpoints = {
