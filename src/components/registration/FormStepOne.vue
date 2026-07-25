@@ -49,11 +49,11 @@ const shippingAddressError = computed(() => {
 <template>
   <div>
     <section aria-labelledby="ticket-heading">
-      <h2 id="ticket-heading" class="text-h3 text-neutral mb-[22px]">
+      <h2 id="ticket-heading" class="text-subtitle1 text-neutral mb-4">
         Select Ticket Type
       </h2>
 
-      <div class="ticket-grid grid gap-[22px] grid-cols-3">
+      <div class="grid gap-4 grid-cols-3 max-desktop:grid-cols-1">
         <TicketOptionCard
           v-for="ticket in ticketTypes"
           :key="ticket.id"
@@ -69,7 +69,7 @@ const shippingAddressError = computed(() => {
         Attendee Information
       </h2>
 
-      <form class="attendee-form grid gap-y-6 gap-x-8 grid-cols-2">
+      <form class="grid gap-y-6 gap-x-8 grid-cols-2 max-desktop:grid-cols-1">
         <FormField
           v-model="attendee.fullName"
           label="Full Name"
@@ -121,12 +121,3 @@ const shippingAddressError = computed(() => {
     </section>
   </div>
 </template>
-
-<style scoped>
-@media (max-width: 1023px) {
-  .ticket-grid,
-  .attendee-form {
-    grid-template-columns: 1fr;
-  }
-}
-</style>

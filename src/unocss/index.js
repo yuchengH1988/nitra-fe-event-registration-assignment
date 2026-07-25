@@ -24,6 +24,10 @@ export const letterSpacing = {
   none: '0',
 }
 
+export const borderRadius = {
+  m: '6px',
+}
+
 export const typographyShortcuts = [{
   'text-h1': 'text-[length:var(--font-size-h1)] line-height-[var(--line-height-h1)] font-[700]',
   'text-h2': 'text-[length:var(--font-size-h2)] line-height-[var(--line-height-h2)] font-bold',
@@ -35,6 +39,7 @@ export const typographyShortcuts = [{
   'text-sm': 'text-[length:var(--font-size-sm)] line-height-[var(--line-height-sm)] font-regular',
   'text-sm-b': 'text-[length:var(--font-size-sm)] line-height-[var(--line-height-sm)] font-medium',
   'text-xs': 'text-[length:var(--font-size-xs)] line-height-[var(--line-height-xs)] font-regular',
+  'text-xs-b': 'text-[length:var(--font-size-xs)] line-height-[var(--line-height-xs)] font-medium',
 }]
 
 export const breakpoints = {
@@ -49,6 +54,7 @@ export const uiTheme = {
   fontWeight,
   lineHeight,
   letterSpacing,
+  borderRadius,
   zIndex: {
     banner: '1000',
     'banner-alert': '1001',

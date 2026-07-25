@@ -26,34 +26,34 @@ const formatCurrency = (amount) =>
 <template>
   <button
     type="button"
-    class="ticket-card relative flex flex-col text-left min-h-[378px] p-[26px] rounded-[6px] bg-surface-l1 text-neutral border border-neutral-muted cursor-pointer"
-    :class="{ 'ticket-card--selected bg-brand-subtle-rest border-brand-emphasis': selected }"
+    class="ticket-card relative flex flex-col gap-3 text-left p-5 min-h-none tablet:min-h-[378px] rounded-m bg-surface-l1 text-neutral cursor-pointer"
+    :class="{ 'ticket-card--selected bg-brand-subtle-rest': selected }"
     :aria-pressed="selected"
     @click="$emit('select')"
   >
-    <span class="flex items-start justify-between gap-5 mb-[14px]">
-      <span class="text-h3 text-neutral">{{ ticket.name }}</span>
-      <span class="text-h3 text-neutral">{{ formatCurrency(ticket.price) }}</span>
+    <span class="flex items-start justify-between gap-5 text-subtitle1">
+      <span>{{ ticket.name }}</span>
+      <span>{{ formatCurrency(ticket.price) }}</span>
     </span>
 
-    <span class="block text-lg text-neutral-muted mb-[18px]">
+    <span class="block text-sm text-neutral-muted">
       {{ ticket.description }}
     </span>
 
-    <span class="flex flex-col gap-[14px]">
+    <span class="flex flex-col gap-3">
       <span
         v-for="perk in ticket.perks"
         :key="perk"
-        class="flex items-center gap-3 text-lg text-neutral-muted"
+        class="flex items-center gap-2 text-neutral-muted"
       >
         <img class="block w-[14px] h-[14px]" :src="checkIconUrl" alt="" aria-hidden="true">
-        <span>{{ perk }}</span>
+        <span class="text-sm">{{ perk }}</span>
       </span>
     </span>
 
     <span
       v-if="selected"
-      class="inline-flex items-center self-start gap-1 mt-[18px] px-3 py-1 rounded-full bg-success-bold-rest text-inverse text-subtitle2 font-bold"
+      class="inline-flex items-center self-start gap-1 px-[9px] py-[3px] rounded-full bg-success-bold-rest text-inverse text-xs-b"
     >
       <q-icon name="check" size="14px" aria-hidden="true" />
       Selected
@@ -63,30 +63,29 @@ const formatCurrency = (amount) =>
 
 <style scoped>
 .ticket-card {
+  --ticket-shadow:
+    0 1px 3px 0 #0000000a,
+    0 4px 16px 0 #00000014;
+
   appearance: none;
-  box-shadow: 0 1px 3px rgba(46, 53, 56, 0.08);
+  border: 2px solid transparent;
+  box-shadow:
+    var(--ticket-shadow),
+    inset 0 0 0 1px var(--border-neutral-muted);
   transition: background 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
 }
 
-.ticket-card:hover {
-  border-color: var(--border-brand-muted);
-  box-shadow: 0 3px 12px rgba(46, 53, 56, 0.12);
-}
-
+.ticket-card:hover,
 .ticket-card:focus-visible {
-  outline: 3px solid var(--border-brand-opacity);
-  outline-offset: 2px;
+  border-color: var(--border-brand-muted);
+  box-shadow: var(--ticket-shadow);
+  outline: none;
 }
 
-.ticket-card--selected {
-  border-width: 2px;
-  box-shadow: 0 0 0 1px var(--border-brand-emphasis);
-  padding: 25px;
-}
-
-@media (max-width: 1023px) {
-  .ticket-card {
-    min-height: 0;
-  }
+.ticket-card--selected,
+.ticket-card--selected:hover,
+.ticket-card--selected:focus-visible {
+  border-color: var(--border-brand-emphasis);
+  box-shadow: var(--ticket-shadow);
 }
 </style>

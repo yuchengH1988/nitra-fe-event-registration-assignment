@@ -49,7 +49,7 @@ defineProps({
     </span>
     <input
       v-model="model"
-      class="field__input w-full min-w-0 h-[58px] px-4 rounded-[6px] bg-surface-l0 text-neutral text-[length:var(--font-size-h3)] leading-[var(--line-height-h3)] font-regular border border-neutral-muted"
+      class="field__input w-full min-w-0 h-[58px] px-4 rounded-m bg-surface-l0 text-neutral text-[length:var(--font-size-h3)] leading-[var(--line-height-h3)] font-regular border border-neutral-muted"
       :class="{ 'field__input--error': error }"
       :type="type"
       :autocomplete="autocomplete"

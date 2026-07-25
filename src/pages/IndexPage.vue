@@ -29,7 +29,7 @@ const attendee = reactive({
     <ProcessBar :steps="steps" :current-step="1" />
 
     <main class="flex-1 min-h-0 overflow-y-auto">
-      <div class="registration-content mx-auto max-w-[1580px] pt-14 pb-12">
+      <div class="wrapper py-4 tablet:py-10">
         <FormStepOne
           v-model:attendee="attendee"
           v-model:selected-ticket-id="selectedTicketId"
@@ -41,27 +41,3 @@ const attendee = reactive({
     <WizardFooter />
   </div>
 </template>
-
-<style scoped>
-@media (max-width: 1700px) {
-  .registration-content {
-    margin-left: 10vw;
-    margin-right: 10vw;
-  }
-}
-
-@media (max-width: 1023px) {
-  .registration-content {
-    margin-left: 24px;
-    margin-right: 24px;
-    padding-top: 32px;
-  }
-}
-
-@media (max-width: 640px) {
-  .registration-content {
-    margin-left: 16px;
-    margin-right: 16px;
-  }
-}
-</style>
