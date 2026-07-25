@@ -1,0 +1,132 @@
+<script setup>
+import { computed } from 'vue'
+import FormField from './FormField.vue'
+import TicketOptionCard from './TicketOptionCard.vue'
+
+const attendee = defineModel('attendee', {
+  type: Object,
+  required: true,
+})
+
+const selectedTicketId = defineModel('selectedTicketId', {
+  type: String,
+  required: true,
+})
+
+const props = defineProps({
+  ticketTypes: {
+    type: Array,
+    required: true,
+  },
+  hasMerchandiseSelected: {
+    type: Boolean,
+    default: false,
+  },
+  showValidation: {
+    type: Boolean,
+    default: false,
+  },
+})
+
+const shippingAddressLabel = computed(() =>
+  props.hasMerchandiseSelected
+    ? 'Shipping Address'
+    : 'Shipping Address (Optional)',
+)
+
+const shippingAddressError = computed(() => {
+  const shouldRequireAddress =
+    props.hasMerchandiseSelected &&
+    props.showValidation &&
+    !attendee.value.shippingAddress.trim()
+
+  return shouldRequireAddress
+    ? 'Shipping address is required for merchandise orders'
+    : ''
+})
+</script>
+
+<template>
+  <div>
+    <section aria-labelledby="ticket-heading">
+      <h2 id="ticket-heading" class="text-h3 text-neutral mb-[22px]">
+        Select Ticket Type
+      </h2>
+
+      <div class="ticket-grid grid gap-[22px] grid-cols-3">
+        <TicketOptionCard
+          v-for="ticket in ticketTypes"
+          :key="ticket.id"
+          :ticket="ticket"
+          :selected="selectedTicketId === ticket.id"
+          @select="selectedTicketId = ticket.id"
+        />
+      </div>
+    </section>
+
+    <section class="mt-[42px]" aria-labelledby="attendee-heading">
+      <h2 id="attendee-heading" class="text-h1 text-neutral mb-9">
+        Attendee Information
+      </h2>
+
+      <form class="attendee-form grid gap-y-6 gap-x-8 grid-cols-2">
+        <FormField
+          v-model="attendee.fullName"
+          label="Full Name"
+          autocomplete="name"
+          placeholder="John full name"
+        />
+
+        <FormField
+          v-model="attendee.email"
+          label="Email"
+          type="email"
+          autocomplete="email"
+          placeholder="John email address"
+        />
+
+        <FormField
+          v-model="attendee.phone"
+          label="Phone"
+          type="tel"
+          autocomplete="tel"
+          placeholder="Enter your phone number"
+        />
+
+        <FormField
+          v-model="attendee.company"
+          label="Company"
+          autocomplete="organization"
+          placeholder="Enter your company name"
+        />
+
+        <FormField
+          v-model="attendee.jobTitle"
+          label="Job Title"
+          autocomplete="organization-title"
+          placeholder="Enter your job title"
+          wide
+        />
+
+        <FormField
+          v-model="attendee.shippingAddress"
+          :label="shippingAddressLabel"
+          :required="hasMerchandiseSelected"
+          :error="shippingAddressError"
+          autocomplete="shipping street-address"
+          placeholder="Enter your shipping address"
+          wide
+        />
+      </form>
+    </section>
+  </div>
+</template>
+
+<style scoped>
+@media (max-width: 1023px) {
+  .ticket-grid,
+  .attendee-form {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
