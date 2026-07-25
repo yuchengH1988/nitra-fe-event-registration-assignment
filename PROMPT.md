@@ -50,3 +50,26 @@ Implementation notes:
    - `FormField.vue`
    - `WizardFooter.vue`
 5. Added conditional shipping address behavior in `FormStepOne.vue`: when merchandise is selected, the field label becomes required and can show the error text `Shipping address is required for merchandise orders`.
+
+## 2026-07-25 Wizard Foundation
+
+User prompt summary:
+
+```text
+The correct UnoCSS parameters have been adjusted.
+Previously built parts should use the correct typography settings.
+Refer to the text-* typography usage in src/unocss/index.js.
+Check the documented form filling logic.
+If the previous work did not sync with the requirement, add composables.
+Create the base foundation for the four-step form and re-check the requirements.
+```
+
+Implementation notes:
+
+1. Re-scanned `BRIEF.md` and `README.md`; confirmed the form is a four-step wizard with preserved cross-step state and unified Step 4 validation.
+2. Added `useRegistrationWizard.js` as the feature-scoped source of truth for current step, attendee data, ticket selection, selected sessions, add-ons, selected entities, validation state, and navigation.
+3. Added `useRegistrationValidation.js` for the first unified validation foundation.
+4. Added `utils/schedule.js` for date/endDate overlap detection and conflict pair generation.
+5. Updated Step 1 to consume wizard state from the composable instead of owning raw state in the page.
+6. Updated the footer primary action and label to follow the current step.
+7. Replaced remaining hand-written typography utility values in registration components with project typography shortcuts.

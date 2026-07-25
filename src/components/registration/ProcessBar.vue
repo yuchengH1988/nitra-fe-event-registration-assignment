@@ -24,7 +24,7 @@ defineProps({
         ]"
       >
         <span
-          class="process-step__marker inline-flex flex-none items-center justify-center size-[32px] rounded-full text-[14px] font-semibold"
+          class="process-step__marker inline-flex flex-none items-center justify-center size-[32px] rounded-full text-sm-b"
           :class="step.number === currentStep
             ? 'bg-brand-emphasis-rest text-inverse'
             : 'bg-surface-l2 text-neutral-quiet'"
@@ -32,7 +32,7 @@ defineProps({
           {{ step.number }}
         </span>
         <span
-          class="process-step__label flex-none text-[13px] whitespace-nowrap"
+          class="process-step__label flex-none text-sm whitespace-nowrap"
           :class="step.number === currentStep ? 'text-neutral font-semibold max-mobile:flex-1' : 'text-neutral-quiet max-mobile:hidden'"
         >
           {{ step.label }}

@@ -49,7 +49,7 @@ defineProps({
     </span>
     <input
       v-model="model"
-      class="field__input w-full min-w-0 px-3 py-2.5 rounded-m bg-surface-l0 text-lg border border-neutral-muted"
+      class="field__input w-full min-w-0 px-3 py-2.5 rounded-m bg-surface-l0 text-lg max-mobile:text-h4 border border-neutral-muted"
       :class="{ 'field__input--error': error }"
       :type="type"
       :autocomplete="autocomplete"
@@ -94,10 +94,4 @@ defineProps({
   border-color: var(--border-danger-emphasis);
 }
 
-@media (max-width: 640px) {
-  .field__input {
-    font-size: var(--font-size-h4);
-    line-height: var(--line-height-h4);
-  }
-}
 </style>
