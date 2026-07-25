@@ -71,7 +71,7 @@ const formatCurrency = (amount) =>
   border: 2px solid transparent;
   box-shadow:
     var(--ticket-shadow),
-    inset 0 0 0 1px var(--border-neutral-muted);
+    0 0 0 1px var(--border-neutral-muted);
   transition: background 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
 }
 

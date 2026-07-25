@@ -38,18 +38,18 @@ defineProps({
 
 <template>
   <label
-    class="field flex flex-col gap-[9px] min-w-0 text-lg font-medium"
+    class="field flex flex-col gap-[6px] min-w-0"
     :class="[
       wide ? 'field--wide' : '',
       error ? 'text-danger' : 'text-neutral',
     ]"
   >
-    <span>
+    <span class="text-sm-b">
       {{ label }}<template v-if="required"> *</template>
     </span>
     <input
       v-model="model"
-      class="field__input w-full min-w-0 h-[58px] px-4 rounded-m bg-surface-l0 text-neutral text-[length:var(--font-size-h3)] leading-[var(--line-height-h3)] font-regular border border-neutral-muted"
+      class="field__input w-full min-w-0 px-3 py-2.5 rounded-m bg-surface-l0 text-lg border border-neutral-muted"
       :class="{ 'field__input--error': error }"
       :type="type"
       :autocomplete="autocomplete"
@@ -83,7 +83,6 @@ defineProps({
 
 .field__input:focus {
   border-color: var(--border-brand-emphasis);
-  box-shadow: 0 0 0 3px var(--border-brand-opacity);
   outline: none;
 }
 
@@ -93,7 +92,6 @@ defineProps({
 
 .field__input--error:focus {
   border-color: var(--border-danger-emphasis);
-  box-shadow: 0 0 0 3px var(--border-danger-opacity);
 }
 
 @media (max-width: 640px) {

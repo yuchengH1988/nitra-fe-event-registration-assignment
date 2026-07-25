@@ -47,7 +47,7 @@ const shippingAddressError = computed(() => {
 </script>
 
 <template>
-  <div>
+  <div class="space-y-8">
     <section aria-labelledby="ticket-heading">
       <h2 id="ticket-heading" class="text-subtitle1 text-neutral mb-4">
         Select Ticket Type
@@ -64,12 +64,12 @@ const shippingAddressError = computed(() => {
       </div>
     </section>
 
-    <section class="mt-[42px]" aria-labelledby="attendee-heading">
-      <h2 id="attendee-heading" class="text-h1 text-neutral mb-9">
+    <section aria-labelledby="attendee-heading text-neutral">
+      <h2 id="attendee-heading" class="text-h3 mb-8">
         Attendee Information
       </h2>
 
-      <form class="grid gap-y-6 gap-x-8 grid-cols-2 max-desktop:grid-cols-1">
+      <form class="grid gap-y-5 gap-x-6 grid-cols-2 max-desktop:grid-cols-1">
         <FormField
           v-model="attendee.fullName"
           label="Full Name"
