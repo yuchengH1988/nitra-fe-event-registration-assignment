@@ -1,8 +1,10 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
+
 defineProps({
   primaryLabel: {
     type: String,
-    default: 'Next: Session Selection',
+    default: '',
   },
   showBack: {
     type: Boolean,
@@ -15,6 +17,7 @@ defineProps({
 })
 
 defineEmits(['back', 'next'])
+const { t } = useI18n()
 </script>
 
 <template>
@@ -25,7 +28,7 @@ defineEmits(['back', 'next'])
         unelevated
         no-caps
         class="back-button px-4 py-2.5 rounded text-subtitle2 text-neutral-muted bg-neutral-muted-rest"
-        label="Back"
+        :label="t('actions.back')"
         @click="$emit('back')"
       />
       <q-btn
@@ -34,7 +37,7 @@ defineEmits(['back', 'next'])
         class="next-button px-4 py-2.5 rounded text-subtitle2 text-inverse bg-accent-emphasis-rest"
         :class="{ 'opacity-50': primaryDisabled }"
         :disable="primaryDisabled"
-        :label="primaryLabel"
+        :label="primaryLabel || t('actions.nextSessionSelection')"
         @click="$emit('next')"
       />
     </div>

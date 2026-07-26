@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import downTriangleUrl from 'src/assets/icons/down-triangle.svg'
 import QuantityStepper from '../atoms/QuantityStepper.vue'
 import SelectableCardFrame from '../atoms/SelectableCardFrame.vue'
+import { useRegistrationCopy } from 'src/composables/useRegistrationCopy.js'
 import { formatCurrency } from 'src/utils/currency.js'
 
 const props = defineProps({
@@ -17,6 +18,7 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:modelValue'])
+const { t, locale, addonName, addonDescription } = useRegistrationCopy()
 
 const defaultSize = (sizes) => {
   if (!sizes?.length) return null
@@ -57,16 +59,16 @@ const size = computed({
     padding-class="p-4"
   >
     <span class="flex items-start justify-between gap-4 text-subtitle1 text-neutral">
-      <span>{{ item.name }}</span>
+      <span>{{ addonName(item) }}</span>
       <span>
-        {{ formatCurrency(item.price, { maximumFractionDigits: 0 }) }}
+        {{ formatCurrency(item.price, { maximumFractionDigits: 0, locale }) }}
       </span>
     </span>
 
-    <span class="text-sm text-neutral-muted">{{ item.description }}</span>
+    <span class="text-sm text-neutral-muted">{{ addonDescription(item) }}</span>
     <span class="flex flex-wrap items-center gap-4 text-neutral-muted text-sm-b">
       <label v-if="item.sizes" class="inline-flex items-center gap-2">
-        <span>Size:</span>
+        <span>{{ t('common.size') }}</span>
         <span class="relative inline-flex items-center">
           <select
             v-model="size"
@@ -86,14 +88,14 @@ const size = computed({
       </label>
 
       <span class="inline-flex items-center gap-2">
-        <span>Qty:</span>
+        <span>{{ t('common.quantity') }}</span>
         <QuantityStepper v-model="quantity" :max="item.maxQuantity" />
-        <span class="text-ss text-neutral-quiet">max {{ item.maxQuantity }}</span>
+        <span class="text-ss text-neutral-quiet">{{ t('common.max', { count: item.maxQuantity }) }}</span>
       </span>
     </span>
 
     <span v-if="selected" class="text-xs-b text-success">
-      ✓ Added to order
+      ✓ {{ t('common.addedToOrder') }}
     </span>
   </SelectableCardFrame>
 </template>

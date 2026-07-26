@@ -1,4 +1,6 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
+
 defineProps({
   title: {
     type: String,
@@ -15,6 +17,7 @@ defineProps({
 })
 
 defineEmits(['edit'])
+const { t } = useI18n()
 </script>
 
 <template>
@@ -31,7 +34,7 @@ defineEmits(['edit'])
         class="text-sm-b text-brand hover:text-brand-emphasis-active underline"
         @click="$emit('edit')"
       >
-      {{ `Edit → Step ${editLabel}` }}
+        {{ t('actions.editStep', { step: editLabel }) }}
       </button>
     </header>
     <slot />

@@ -1,4 +1,6 @@
 <script setup>
+import { useRegistrationCopy } from 'src/composables/useRegistrationCopy.js'
+
 defineProps({
   confirmationNumber: {
     type: String,
@@ -12,13 +14,14 @@ defineProps({
     type: String,
     default: '',
   },
-  ticketTypeName: {
-    type: String,
-    default: '',
+  ticketType: {
+    type: Object,
+    default: null,
   },
 })
 
 defineEmits(['back-home'])
+const { t, ticketName } = useRegistrationCopy()
 </script>
 
 <template>
@@ -28,20 +31,23 @@ defineEmits(['back-home'])
         <q-icon name="check" size="60px" aria-hidden="true" />
       </div>
       <h2 class="text-h2 text-success">
-        Registration Complete!
+        {{ t('headings.registrationComplete') }}
       </h2>
       <p class="text-lg text-neutral">
-        Confirmation #{{ confirmationNumber }}
+        {{ t('review.confirmation', { number: confirmationNumber }) }}
       </p>
       <p class="mx-auto text-sm text-neutral-muted">
-        Thank you, {{ attendeeName || 'attendee' }}! Your {{ ticketTypeName || 'ticket' }} registration is confirmed.
-        <br/>You will receive a confirmation email at {{ attendeeEmail || 'your email address' }}.
+        {{ t('review.confirmationBody', {
+          name: attendeeName || t('review.attendeeFallback'),
+          ticket: ticketType ? ticketName(ticketType) : t('review.ticketFallback'),
+        }) }}
+        <br>{{ t('review.confirmationEmail', { email: attendeeEmail || t('review.emailFallback') }) }}
       </p>
       <q-btn
         unelevated
         no-caps
         class="rounded bg-accent-emphasis-rest px-4 py-2 text-subtitle2 text-inverse"
-        label="Back to Home"
+        :label="t('actions.backHome')"
         @click="$emit('back-home')"
       />
     </div>

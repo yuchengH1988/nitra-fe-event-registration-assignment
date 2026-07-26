@@ -54,8 +54,8 @@ export function groupSessionsByDate(sessions) {
  * @param {string} date
  * @returns {string}
  */
-export function formatSessionDateTab(date) {
-  return new Intl.DateTimeFormat('en-US', {
+export function formatSessionDateTab(date, locale = 'en') {
+  return new Intl.DateTimeFormat(locale, {
     month: 'short',
     day: 'numeric',
     timeZone: 'UTC',
@@ -68,8 +68,8 @@ export function formatSessionDateTab(date) {
  * @param {{ date: string, endDate: string }} item
  * @returns {string}
  */
-export function formatSessionTimeRange(item) {
-  const formatter = new Intl.DateTimeFormat('en-US', {
+export function formatSessionTimeRange(item, locale = 'en') {
+  const formatter = new Intl.DateTimeFormat(locale, {
     hour: 'numeric',
     minute: '2-digit',
     hour12: true,
@@ -85,8 +85,8 @@ export function formatSessionTimeRange(item) {
  * @param {{ date: string }} item
  * @returns {string}
  */
-export function formatReviewSessionTime(item) {
-  return new Intl.DateTimeFormat('en-US', {
+export function formatReviewSessionTime(item, locale = 'en') {
+  return new Intl.DateTimeFormat(locale, {
     month: 'short',
     day: 'numeric',
     hour: 'numeric',

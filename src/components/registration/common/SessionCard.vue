@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import checkIconUrl from 'src/assets/icons/check.svg'
 import SelectableCardFrame from '../atoms/SelectableCardFrame.vue'
+import { useRegistrationCopy } from 'src/composables/useRegistrationCopy.js'
 import { orange } from 'src/unocss/colors.js'
 import {
   formatSessionTimeRange,
@@ -25,6 +26,7 @@ const props = defineProps({
 })
 
 defineEmits(['toggle'])
+const { t, locale, sessionTitle, speakerTitle } = useRegistrationCopy()
 
 const adjustedRegistered = computed(() =>
   Number(props.session.registered) + (props.selected ? 1 : 0),
@@ -119,15 +121,15 @@ const trackLabel = computed(() =>
     </span>
 
     <span class="session-title block text-subtitle1">
-      {{ session.title }}
+      {{ sessionTitle(session) }}
     </span>
 
     <span class="session-speaker block text-sm">
-      {{ session.speaker }}, {{ session.speakerTitle }}
+      {{ session.speaker }}, {{ speakerTitle(session) }}
     </span>
 
     <span class="session-time block text-xs">
-      {{ formatSessionTimeRange(session) }}
+      {{ formatSessionTimeRange(session, locale) }}
     </span>
 
     <span class="capacity-bar block h-1.5 rounded-full">
@@ -141,7 +143,7 @@ const trackLabel = computed(() =>
       class="block text-xs-b availability-text"
       :class="{ 'availability-text--sold-out': full }"
     >
-      {{ full ? 'Sold Out' : `${remaining} spots left` }}
+      {{ full ? t('common.soldOut') : t('common.spotsLeft', { count: remaining }) }}
     </span>
   </SelectableCardFrame>
 </template>

@@ -1,5 +1,6 @@
 <script setup>
 import { computed } from 'vue'
+import { useI18n } from 'vue-i18n'
 import FormField from '../atoms/FormField.vue'
 import TicketOptionCard from '../common/TicketOptionCard.vue'
 
@@ -28,10 +29,12 @@ const props = defineProps({
   },
 })
 
+const { t } = useI18n()
+
 const shippingAddressLabel = computed(() =>
   props.hasMerchandiseSelected
-    ? 'Shipping Address'
-    : 'Shipping Address (Optional)',
+    ? t('form.shippingAddress')
+    : t('form.shippingAddressOptional'),
 )
 
 const shippingAddressError = computed(() => {
@@ -41,7 +44,7 @@ const shippingAddressError = computed(() => {
     !attendee.value.shippingAddress.trim()
 
   return shouldRequireAddress
-    ? 'Shipping address is required for merchandise orders'
+    ? t('validation.REQUIRED_SHIPPING_ADDRESS')
     : ''
 })
 </script>
@@ -50,7 +53,7 @@ const shippingAddressError = computed(() => {
   <div class="space-y-8">
     <section aria-labelledby="ticket-heading">
       <h2 id="ticket-heading" class="text-subtitle1 text-neutral mb-4">
-        Select Ticket Type
+        {{ t('headings.selectTicketType') }}
       </h2>
 
       <div class="grid gap-4 grid-cols-3 max-desktop:grid-cols-1">
@@ -66,45 +69,45 @@ const shippingAddressError = computed(() => {
 
     <section aria-labelledby="attendee-heading text-neutral">
       <h2 id="attendee-heading" class="text-h3 mb-8">
-        Attendee Information
+        {{ t('headings.attendeeInformation') }}
       </h2>
 
       <form class="grid gap-y-5 gap-x-6 grid-cols-2 max-desktop:grid-cols-1">
         <FormField
           v-model="attendee.fullName"
-          label="Full Name"
+          :label="t('form.fullName')"
           autocomplete="name"
-          placeholder="John full name"
+          :placeholder="t('form.placeholders.fullName')"
         />
 
         <FormField
           v-model="attendee.email"
-          label="Email"
+          :label="t('form.email')"
           type="email"
           autocomplete="email"
-          placeholder="John email address"
+          :placeholder="t('form.placeholders.email')"
         />
 
         <FormField
           v-model="attendee.phone"
-          label="Phone"
+          :label="t('form.phone')"
           type="tel"
           autocomplete="tel"
-          placeholder="Enter your phone number"
+          :placeholder="t('form.placeholders.phone')"
         />
 
         <FormField
           v-model="attendee.company"
-          label="Company"
+          :label="t('form.company')"
           autocomplete="organization"
-          placeholder="Enter your company name"
+          :placeholder="t('form.placeholders.company')"
         />
 
         <FormField
           v-model="attendee.jobTitle"
-          label="Job Title"
+          :label="t('form.jobTitle')"
           autocomplete="organization-title"
-          placeholder="Enter your job title"
+          :placeholder="t('form.placeholders.jobTitle')"
           wide
         />
 
@@ -114,7 +117,7 @@ const shippingAddressError = computed(() => {
           :required="hasMerchandiseSelected"
           :error="shippingAddressError"
           autocomplete="shipping street-address"
-          placeholder="Enter your shipping address"
+          :placeholder="t('form.placeholders.shippingAddress')"
           wide
         />
       </form>

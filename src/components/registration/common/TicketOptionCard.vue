@@ -1,6 +1,7 @@
 <script setup>
 import checkIconUrl from 'src/assets/icons/circle-check.svg'
 import SelectableCardFrame from '../atoms/SelectableCardFrame.vue'
+import { useRegistrationCopy } from 'src/composables/useRegistrationCopy.js'
 import { formatCurrency } from 'src/utils/currency.js'
 
 defineProps({
@@ -15,6 +16,8 @@ defineProps({
 })
 
 defineEmits(['select'])
+
+const { t, locale, ticketName, ticketDescription, ticketPerk } = useRegistrationCopy()
 </script>
 
 <template>
@@ -28,12 +31,12 @@ defineEmits(['select'])
     @press="$emit('select')"
   >
     <span class="flex items-start justify-between gap-5 text-subtitle1">
-      <span>{{ ticket.name }}</span>
-      <span>{{ formatCurrency(ticket.price, { maximumFractionDigits: 0 }) }}</span>
+      <span>{{ ticketName(ticket) }}</span>
+      <span>{{ formatCurrency(ticket.price, { maximumFractionDigits: 0, locale }) }}</span>
     </span>
 
     <span class="block text-sm text-neutral-muted">
-      {{ ticket.description }}
+      {{ ticketDescription(ticket) }}
     </span>
 
     <span class="flex flex-col gap-3">
@@ -43,7 +46,7 @@ defineEmits(['select'])
         class="flex items-center gap-2 text-neutral-muted"
       >
         <img class="block w-[14px] h-[14px]" :src="checkIconUrl" alt="" aria-hidden="true">
-        <span class="text-sm">{{ perk }}</span>
+        <span class="text-sm">{{ ticketPerk(perk) }}</span>
       </span>
     </span>
 
@@ -52,7 +55,7 @@ defineEmits(['select'])
       class="inline-flex items-center self-start gap-1 px-[9px] py-[3px] rounded-full bg-success-bold-rest text-inverse text-xs-b"
     >
       <q-icon name="check" size="14px" aria-hidden="true" />
-      Selected
+      {{ t('common.selected') }}
     </span>
   </SelectableCardFrame>
 </template>

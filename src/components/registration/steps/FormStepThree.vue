@@ -1,5 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import infoIconUrl from 'src/assets/icons/circle-info.svg'
 import AddonCategoryTabs from '../common/AddonCategoryTabs.vue'
 import MealOptionCard from '../common/MealOptionCard.vue'
@@ -44,11 +45,13 @@ const props = defineProps({
   },
 })
 
-const tabs = [
-  { id: 'workshop', label: 'Workshops' },
-  { id: 'meal', label: 'Meal Packages' },
-  { id: 'merchandise', label: 'Merchandise' },
-]
+const { t } = useI18n()
+
+const tabs = computed(() => [
+  { id: 'workshop', label: t('addons.categories.workshop') },
+  { id: 'meal', label: t('addons.categories.meal') },
+  { id: 'merchandise', label: t('addons.categories.merchandise') },
+])
 
 const activeTab = ref('workshop')
 
@@ -94,14 +97,14 @@ function isWorkshopUnavailable(workshop) {
 function getWorkshopUnavailableReason(workshop) {
   const isFull = Number(workshop.registered) >= Number(workshop.capacity)
 
-  if (isFull) return 'Sold Out'
+  if (isFull) return t('common.soldOut')
 
   const conflictsWithSession = props.selectedSessions.some((session) =>
     doTimeRangesOverlap(workshop, session),
   )
 
   return conflictsWithSession
-    ? 'Unavailable due to a time conflict with a selected session'
+    ? t('addons.workshopTimeConflict')
     : ''
 }
 </script>
@@ -110,7 +113,7 @@ function getWorkshopUnavailableReason(workshop) {
   <section aria-labelledby="addons-heading" class="grid grid-cols-[minmax(0,1fr)_320px] gap-8 max-desktop:grid-cols-1">
     <div class="space-y-4 tablet:space-y-6">
       <h3 id="addons-heading" class="text-h3 text-neutral">
-        Select Add-ons
+        {{ t('headings.selectAddons') }}
       </h3>
 
       <AddonCategoryTabs
@@ -154,9 +157,9 @@ function getWorkshopUnavailableReason(workshop) {
             aria-hidden="true"
           >
           <div>
-            <span class="text-subtitle2">Shipping Information</span>
+            <span class="text-subtitle2">{{ t('headings.shippingInformation') }}</span>
             <p class="mt-1 text-subtitle2 font-regular">
-              Merchandise items will be shipped to your address one week before the conference. Please ensure your shipping address in Step 1 is correct.
+              {{ t('addons.shippingInfo') }}
             </p>
           </div>
         </div>

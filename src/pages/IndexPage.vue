@@ -7,8 +7,10 @@ import RegistrationConfirmation from 'src/components/registration/steps/Registra
 import ProcessBar from 'src/components/registration/layout/ProcessBar.vue'
 import WizardFooter from 'src/components/registration/layout/WizardFooter.vue'
 import { useRegistrationWizard } from 'src/composables/useRegistrationWizard.js'
+import { useI18n } from 'vue-i18n'
 
 const wizard = useRegistrationWizard()
+const { t } = useI18n()
 </script>
 
 <template>
@@ -18,14 +20,14 @@ const wizard = useRegistrationWizard()
         :confirmation-number="wizard.confirmationNumber.value"
         :attendee-name="wizard.registration.attendee.fullName"
         :attendee-email="wizard.registration.attendee.email"
-        :ticket-type-name="wizard.selectedTicket.value?.name"
+        :ticket-type="wizard.selectedTicket.value"
         @back-home="wizard.resetRegistration"
       />
     </template>
 
     <template v-else>
       <ProcessBar
-        :steps="wizard.steps"
+        :steps="wizard.steps.value"
         :current-step="wizard.currentStep.value"
         :invalid-steps="wizard.invalidSteps.value"
         @select-step="wizard.goToStep"
@@ -79,7 +81,7 @@ const wizard = useRegistrationWizard()
             {{ wizard.steps[wizard.currentStep.value - 1].label }}
           </p>
           <p class="mt-2 text-lg text-neutral-muted">
-            Step {{ wizard.currentStep.value }} foundation is ready. Detailed UI will be built in the next pass.
+            {{ t('common.step') }} {{ wizard.currentStep.value }}
           </p>
         </section>
       </div>

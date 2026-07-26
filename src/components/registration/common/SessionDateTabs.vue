@@ -1,4 +1,7 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
+import { formatSessionDateTab } from 'src/utils/registration-data.js'
+
 defineProps({
   groups: {
     type: Array,
@@ -11,10 +14,11 @@ defineProps({
 })
 
 defineEmits(['select'])
+const { locale } = useI18n()
 </script>
 
 <template>
-  <div class="rounded bg-surface-l2 inline-flex gap-1 p-1" role="tablist" aria-label="Session dates">
+  <div class="rounded bg-surface-l2 inline-flex gap-1 p-1" role="tablist">
     <button
       v-for="group in groups"
       :key="group.date"
@@ -27,7 +31,7 @@ defineEmits(['select'])
       role="tab"
       @click="$emit('select', group.date)"
     >
-      {{ group.label }}
+      {{ formatSessionDateTab(group.date, locale) }}
     </button>
   </div>
 </template>

@@ -1,4 +1,5 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
 import minusIconUrl from 'src/assets/icons/minus.svg'
 import plusIconUrl from 'src/assets/icons/plus.svg'
 
@@ -13,6 +14,8 @@ const props = defineProps({
     required: true,
   },
 })
+
+const { t } = useI18n()
 
 function decrease() {
   model.value = Math.max(model.value - 1, 0)
@@ -29,7 +32,7 @@ function increase() {
       type="button"
       class="inline-flex size-7 items-center justify-center rounded-m bg-neutral-muted-rest"
       :disabled="model <= 0"
-      aria-label="Decrease quantity"
+      :aria-label="t('actions.decreaseQuantity')"
       @click="decrease"
     >
       <img class="block w-3 h-0.5" :src="minusIconUrl" alt="" aria-hidden="true">
@@ -40,7 +43,7 @@ function increase() {
     <button
       type="button"
       class="inline-flex size-7 items-center justify-center rounded-m bg-neutral-muted-rest"
-      aria-label="Increase quantity"
+      :aria-label="t('actions.increaseQuantity')"
       :disabled="model >= max"
       @click="increase"
     >

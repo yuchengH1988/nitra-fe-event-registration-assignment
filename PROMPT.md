@@ -292,3 +292,39 @@ Implementation notes:
 1. Added a workshop unavailable reason helper in `FormStepThree.vue`.
 2. Workshop cards still show `Sold Out` for full workshops.
 3. Workshops that cannot be selected because their time overlaps selected sessions now show `Unavailable due to a time conflict with a selected session` under the availability text, using warning text color.
+
+## 2026-07-26 i18n Setup
+
+User prompt summary:
+
+```text
+完成 i18n，只需要中英文設定。
+英文既有資料可以保留，中文要補齊每一個地方。
+網站的 WebDev Summit 2025 不用更換。
+中英文資料用好管理的方式做，不用硬抓 mock 內的資訊；
+英文部分可以在 i18n 內從 mock 引入。
+```
+
+Implementation notes:
+
+1. Added `vue-i18n` and registered it through a Quasar boot file.
+2. Added `src/i18n/messages.js`; English entity copy is generated from `event`, `addons`, and `sessions` mocks, while Traditional Chinese copy is maintained by id in the i18n message table.
+3. Added `useRegistrationCopy.js` so ticket, perk, add-on, and session display text resolve through i18n without mutating mock data.
+4. Added an EN / 中文 language switcher in the nav. The event title remains data-driven and is not translated.
+5. Replaced fixed UI copy across the wizard: steps, footer buttons, form labels/placeholders, card status text, add-on tabs, shipping hints, review sections, validation text, order summary labels, and confirmation page copy.
+
+## 2026-07-27 Locale URLs
+
+User prompt summary:
+
+```text
+需要語系網址：
+英文（預設）http://localhost:9003/
+中文 http://localhost:9003/zh
+```
+
+Implementation notes:
+
+1. Added two route entries for the same registration page: `/` with English locale and `/zh` with Traditional Chinese locale.
+2. Router guards now set i18n locale from route metadata so `/` stays English even if the browser or previous localStorage value is Chinese.
+3. The nav language switcher now updates the route instead of only changing in-memory locale.

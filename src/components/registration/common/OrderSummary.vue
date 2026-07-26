@@ -1,4 +1,5 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
 import { formatCurrency } from 'src/utils/currency.js'
 
 defineProps({
@@ -11,12 +12,14 @@ defineProps({
     required: true,
   },
 })
+
+const { t, locale } = useI18n()
 </script>
 
 <template>
   <aside class="rounded-m bg-surface-l1 border border-neutral-muted p-4 tablet:p-6 space-y-4">
     <h3 class="text-subtitle1 text-neutral">
-      Order Summary
+      {{ t('headings.orderSummary') }}
     </h3>
     <div
       v-for="item in lineItems"
@@ -30,14 +33,14 @@ defineProps({
         {{ item.label }}<template v-if="item.quantity > 1"> × {{ item.quantity }}</template>
       </span>
       <span class="flex-none whitespace-nowrap">
-        {{ formatCurrency(item.total) }}
+        {{ formatCurrency(item.total, { locale }) }}
       </span>
     </div>
 
     <div class="border-t divider-default"></div>
     <div class="flex items-center justify-between text-sm-b">
-      <span>Total</span>
-      <span>{{ formatCurrency(total) }}</span>
+      <span>{{ t('common.total') }}</span>
+      <span>{{ formatCurrency(total, { locale }) }}</span>
     </div>
   </aside> 
 </template>

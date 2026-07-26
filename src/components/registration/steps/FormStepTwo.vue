@@ -1,5 +1,6 @@
 <script setup>
 import { computed, ref, watch } from 'vue'
+import { useI18n } from 'vue-i18n'
 import SessionCard from '../common/SessionCard.vue'
 import SessionDateTabs from '../common/SessionDateTabs.vue'
 import { doTimeRangesOverlap } from 'src/utils/schedule.js'
@@ -16,6 +17,7 @@ const props = defineProps({
   },
 })
 
+const { t } = useI18n()
 const activeDate = ref(props.groupedSessions[0]?.date ?? '')
 
 const activeGroup = computed(() =>
@@ -61,7 +63,7 @@ function isUnavailableByTimeConflict(session) {
 <template>
   <section aria-labelledby="sessions-heading" class="space-y-4 tablet:space-y-6">
     <h3 id="sessions-heading" class="text-h3 text-neutral">
-      Select Sessions
+      {{ t('headings.selectSessions') }}
     </h3>
 
     <SessionDateTabs
@@ -71,7 +73,7 @@ function isUnavailableByTimeConflict(session) {
     />
 
     <p class="text-sm-b text-brand-emphasis">
-      {{ selectedSessionIds.length }} sessions selected
+      {{ t('common.sessionsSelected', { count: selectedSessionIds.length }) }}
     </p>
 
     <div class="grid grid-cols-2 gap-2 tablet:gap-4 max-desktop:grid-cols-1">

@@ -1,8 +1,10 @@
 import { computed, reactive, ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import {
   createEmptyValidationResult,
   validateRegistration,
 } from 'src/composables/useRegistrationValidation.js'
+import { useRegistrationCopy } from 'src/composables/useRegistrationCopy.js'
 import { addons } from 'src/mocks/addons.js'
 import { event } from 'src/mocks/event.js'
 import { sessions } from 'src/mocks/sessions.js'
@@ -13,10 +15,10 @@ import {
 } from 'src/utils/schedule.js'
 
 export const REGISTRATION_STEPS = [
-  { number: 1, label: 'Attendee Info', nextStepLabel: 'Next: Session Selection' },
-  { number: 2, label: 'Sessions', nextStepLabel: 'Next: Add-ons' },
-  { number: 3, label: 'Add-ons', nextStepLabel: 'Next: Review' },
-  { number: 4, label: 'Review', nextStepLabel: 'Submit Registration' },
+  { number: 1, labelKey: 'steps.attendeeInfo', nextStepLabelKey: 'actions.nextSessionSelection' },
+  { number: 2, labelKey: 'steps.sessions', nextStepLabelKey: 'actions.nextAddons' },
+  { number: 3, labelKey: 'steps.addons', nextStepLabelKey: 'actions.nextReview' },
+  { number: 4, labelKey: 'steps.review', nextStepLabelKey: 'actions.submitRegistration' },
 ]
 
 const INITIAL_ATTENDEE = {
@@ -39,6 +41,12 @@ const VIP_INCLUDED_MEAL_IDS = ['meal1']
  * @returns {object} Registration wizard state, derived data, and actions.
  */
 export function useRegistrationWizard() {
+  const { t } = useI18n()
+  const {
+    ticketName,
+    addonName,
+  } = useRegistrationCopy()
+
   const currentStep = ref(1)
   const hasAttemptedSubmit = ref(false)
   const isSubmitting = ref(false)
@@ -114,10 +122,12 @@ export function useRegistrationWizard() {
   const ticketLineItem = computed(() => {
     if (!selectedTicket.value) return null
 
+    const name = ticketName(selectedTicket.value)
+
     return {
       id: selectedTicket.value.id,
       category: 'ticket',
-      label: `${selectedTicket.value.name} Ticket`,
+      label: t('summary.ticketLine', { ticket: name }),
       quantity: 1,
       unitPrice: selectedTicket.value.price,
       subtotal: selectedTicket.value.price,
@@ -129,7 +139,7 @@ export function useRegistrationWizard() {
     selectedWorkshops.value.map((workshop) => ({
       id: workshop.id,
       category: 'workshop',
-      label: workshop.name,
+      label: addonName(workshop),
       quantity: 1,
       unitPrice: workshop.price,
       subtotal: workshop.price,
@@ -142,8 +152,8 @@ export function useRegistrationWizard() {
       id: meal.id,
       category: 'meal',
       label: includedMealIds.value.includes(meal.id)
-        ? `${meal.name} (Included with VIP ticket)`
-        : meal.name,
+        ? `${addonName(meal)} ${t('summary.includedMealSuffix')}`
+        : addonName(meal),
       quantity: 1,
       unitPrice: includedMealIds.value.includes(meal.id) ? 0 : meal.price,
       subtotal: includedMealIds.value.includes(meal.id) ? 0 : meal.price,
@@ -155,7 +165,7 @@ export function useRegistrationWizard() {
     selectedMerchandise.value.map((item) => ({
       id: item.id,
       category: 'merchandise',
-      label: item.name,
+      label: addonName(item),
       quantity: item.quantity,
       unitPrice: item.price,
       subtotal: item.price * item.quantity,
@@ -193,7 +203,7 @@ export function useRegistrationWizard() {
       items.push({
         id: 'vip-workshop-discount',
         category: 'discount',
-        label: 'Workshop discount (VIP 10%)',
+        label: t('summary.workshopDiscount'),
         quantity: 1,
         unitPrice: -workshopDiscount.value,
         subtotal: -workshopDiscount.value,
@@ -239,12 +249,19 @@ export function useRegistrationWizard() {
 
   const canGoPrevious = computed(() => currentStep.value > 1)
   const canGoNext = computed(() => currentStep.value < REGISTRATION_STEPS.length)
+  const steps = computed(() =>
+    REGISTRATION_STEPS.map((step) => ({
+      ...step,
+      label: t(step.labelKey),
+      nextStepLabel: t(step.nextStepLabelKey),
+    })),
+  )
   const nextStepLabel = computed(() => {
-    const step = REGISTRATION_STEPS.find(
+    const step = steps.value.find(
       (item) => item.number === currentStep.value,
     )
 
-    return step?.nextStepLabel ?? 'Submit Registration'
+    return step?.nextStepLabel ?? t('actions.submitRegistration')
   })
 
   const isSubmitDisabled = computed(
@@ -310,7 +327,7 @@ export function useRegistrationWizard() {
   }
 
   return {
-    steps: REGISTRATION_STEPS,
+    steps,
     currentStep,
     hasAttemptedSubmit,
     isSubmitting,

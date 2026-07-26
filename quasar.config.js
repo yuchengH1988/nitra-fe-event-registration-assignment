@@ -6,7 +6,7 @@ const githubPagesBase = '/nitra-fe-event-registration-assignment/'
 
 export default function () {
   return {
-    boot: ['unocss'],
+    boot: ['unocss', 'i18n'],
 
     css: ['app.scss'],
 

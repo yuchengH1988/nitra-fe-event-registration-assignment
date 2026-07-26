@@ -4,8 +4,9 @@ export function formatCurrency(amount, options = {}) {
     options.minimumFractionDigits ?? maximumFractionDigits,
     maximumFractionDigits,
   )
+  const locale = options.locale ?? 'en-US'
 
-  return new Intl.NumberFormat('en-US', {
+  return new Intl.NumberFormat(locale, {
     style: 'currency',
     currency: 'USD',
     minimumFractionDigits,

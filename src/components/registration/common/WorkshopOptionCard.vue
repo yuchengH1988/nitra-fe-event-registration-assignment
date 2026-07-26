@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import SelectableCardFrame from '../atoms/SelectableCardFrame.vue'
+import { useRegistrationCopy } from 'src/composables/useRegistrationCopy.js'
 import { formatCurrency } from 'src/utils/currency.js'
 import {
   formatSessionTimeRange,
@@ -28,6 +29,12 @@ const props = defineProps({
 })
 
 defineEmits(['toggle'])
+const {
+  t,
+  locale,
+  addonName,
+  addonDescription,
+} = useRegistrationCopy()
 
 const full = computed(() => isAtCapacity(props.workshop))
 const disabled = computed(() => !props.selected && (full.value || props.unavailable))
@@ -49,15 +56,15 @@ const remaining = computed(() => getRemainingCapacity(props.workshop))
     @press="$emit('toggle')"
   >
     <span class="flex items-start justify-between gap-4">
-      <span class="addon-card__title text-subtitle1">{{ workshop.name }}</span>
+      <span class="addon-card__title text-subtitle1">{{ addonName(workshop) }}</span>
       <span class="addon-card__price text-subtitle1">
-        {{ formatCurrency(workshop.price, { maximumFractionDigits: 0 }) }}
+        {{ formatCurrency(workshop.price, { maximumFractionDigits: 0, locale }) }}
       </span>
     </span>
-    <span class="addon-card__description text-sm">{{ workshop.description }}</span>
-    <span class="addon-card__time text-xs">{{ formatSessionTimeRange(workshop) }}</span>
+    <span class="addon-card__description text-sm">{{ addonDescription(workshop) }}</span>
+    <span class="addon-card__time text-xs">{{ formatSessionTimeRange(workshop, locale) }}</span>
     <span class="addon-card__availability text-xs">
-      {{ full ? 'Sold Out' : `${remaining} spots remaining` }}
+      {{ full ? t('common.soldOut') : t('common.spotsRemaining', { count: remaining }) }}
     </span>
     <span
       v-if="unavailableReason && !full"

@@ -1,4 +1,6 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
+
 defineProps({
   tabs: {
     type: Array,
@@ -11,10 +13,11 @@ defineProps({
 })
 
 defineEmits(['select'])
+const { t } = useI18n()
 </script>
 
 <template>
-  <div class="inline-flex rounded bg-surface-l2 p-1 gap-1" role="tablist" aria-label="Add-on categories">
+  <div class="inline-flex rounded bg-surface-l2 p-1 gap-1" role="tablist" :aria-label="t('headings.selectAddons')">
     <button
       v-for="tab in tabs"
       :key="tab.id"

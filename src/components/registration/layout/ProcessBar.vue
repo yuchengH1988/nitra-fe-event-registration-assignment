@@ -1,4 +1,6 @@
 <script setup>
+import { useI18n } from 'vue-i18n'
+
 defineProps({
   steps: {
     type: Array,
@@ -15,6 +17,7 @@ defineProps({
 })
 
 const emit = defineEmits(['select-step'])
+const { t } = useI18n()
 
 function onSelectStep(stepNumber, currentStep) {
   if (stepNumber >= currentStep) return
@@ -39,7 +42,7 @@ function onSelectStep(stepNumber, currentStep) {
           class="process-step__button inline-flex items-center gap-[10px] min-w-0 appearance-none bg-transparent border-0 p-0 text-inherit"
           :class="step.number < currentStep ? 'cursor-pointer' : 'cursor-default'"
           :aria-current="step.number === currentStep ? 'step' : undefined"
-          :aria-label="step.number < currentStep ? `Go to ${step.label}` : step.label"
+          :aria-label="step.number < currentStep ? t('actions.goToStep', { step: step.label }) : step.label"
           @click="onSelectStep(step.number, currentStep)"
         >
           <span

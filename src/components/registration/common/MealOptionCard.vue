@@ -1,5 +1,6 @@
 <script setup>
 import SelectableCardFrame from '../atoms/SelectableCardFrame.vue'
+import { useRegistrationCopy } from 'src/composables/useRegistrationCopy.js'
 import { formatCurrency } from 'src/utils/currency.js'
 
 defineProps({
@@ -18,6 +19,7 @@ defineProps({
 })
 
 defineEmits(['toggle'])
+const { t, locale, addonName, addonDescription } = useRegistrationCopy()
 </script>
 
 <template>
@@ -31,14 +33,14 @@ defineEmits(['toggle'])
     @press="$emit('toggle')"
   >
     <span class="flex items-start justify-between gap-4">
-      <span class="text-subtitle1 text-neutral">{{ meal.name }}</span>
+      <span class="text-subtitle1 text-neutral">{{ addonName(meal) }}</span>
       <span class="text-subtitle1 text-brand-emphasis">
-        {{ included ? 'Included with VIP ticket' : formatCurrency(meal.price, { maximumFractionDigits: 0 }) }}
+        {{ included ? t('common.includedWithVipTicket') : formatCurrency(meal.price, { maximumFractionDigits: 0, locale }) }}
       </span>
     </span>
-    <span class="text-sm text-neutral-muted">{{ meal.description }}</span>
+    <span class="text-sm text-neutral-muted">{{ addonDescription(meal) }}</span>
     <span v-if="included" class="text-xs-b text-success">
-      ✓ Included in your VIP ticket
+      ✓ {{ t('common.includedInVipTicket') }}
     </span>
   </SelectableCardFrame>
 </template>
