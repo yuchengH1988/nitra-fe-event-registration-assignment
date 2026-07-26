@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import checkIconUrl from 'src/assets/icons/check.svg'
-import SelectableCardFrame from '../shared/SelectableCardFrame.vue'
+import SelectableCardFrame from '../atoms/SelectableCardFrame.vue'
 import { orange } from 'src/unocss/colors.js'
 import {
   formatSessionTimeRange,

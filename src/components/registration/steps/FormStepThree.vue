@@ -1,11 +1,11 @@
 <script setup>
 import { computed, ref } from 'vue'
 import infoIconUrl from 'src/assets/icons/circle-info.svg'
-import AddonCategoryTabs from './AddonCategoryTabs.vue'
-import MealOptionCard from './MealOptionCard.vue'
-import MerchandiseOptionCard from './MerchandiseOptionCard.vue'
-import WorkshopOptionCard from './WorkshopOptionCard.vue'
-import OrderSummary from '../OrderSummary.vue'
+import AddonCategoryTabs from '../common/AddonCategoryTabs.vue'
+import MealOptionCard from '../common/MealOptionCard.vue'
+import MerchandiseOptionCard from '../common/MerchandiseOptionCard.vue'
+import WorkshopOptionCard from '../common/WorkshopOptionCard.vue'
+import OrderSummary from '../common/OrderSummary.vue'
 import { doTimeRangesOverlap } from 'src/utils/schedule.js'
 
 const selectedAddons = defineModel('selectedAddons', {

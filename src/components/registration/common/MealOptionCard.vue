@@ -1,5 +1,5 @@
 <script setup>
-import SelectableCardFrame from '../shared/SelectableCardFrame.vue'
+import SelectableCardFrame from '../atoms/SelectableCardFrame.vue'
 import { formatCurrency } from 'src/utils/currency.js'
 
 defineProps({

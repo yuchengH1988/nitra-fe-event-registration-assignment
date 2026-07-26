@@ -1,6 +1,6 @@
 <script setup>
 import checkIconUrl from 'src/assets/icons/circle-check.svg'
-import SelectableCardFrame from './shared/SelectableCardFrame.vue'
+import SelectableCardFrame from '../atoms/SelectableCardFrame.vue'
 import { formatCurrency } from 'src/utils/currency.js'
 
 defineProps({

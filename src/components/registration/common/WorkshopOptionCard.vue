@@ -1,6 +1,6 @@
 <script setup>
 import { computed } from 'vue'
-import SelectableCardFrame from '../shared/SelectableCardFrame.vue'
+import SelectableCardFrame from '../atoms/SelectableCardFrame.vue'
 import { formatCurrency } from 'src/utils/currency.js'
 import {
   formatSessionTimeRange,

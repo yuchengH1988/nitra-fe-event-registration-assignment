@@ -1,9 +1,9 @@
 <script setup>
-import FormStepOne from 'src/components/registration/FormStepOne.vue'
-import FormStepThree from 'src/components/registration/addons/FormStepThree.vue'
-import FormStepTwo from 'src/components/registration/sessions/FormStepTwo.vue'
-import ProcessBar from 'src/components/registration/ProcessBar.vue'
-import WizardFooter from 'src/components/registration/WizardFooter.vue'
+import FormStepOne from 'src/components/registration/steps/FormStepOne.vue'
+import FormStepThree from 'src/components/registration/steps/FormStepThree.vue'
+import FormStepTwo from 'src/components/registration/steps/FormStepTwo.vue'
+import ProcessBar from 'src/components/registration/layout/ProcessBar.vue'
+import WizardFooter from 'src/components/registration/layout/WizardFooter.vue'
 import { useRegistrationWizard } from 'src/composables/useRegistrationWizard.js'
 
 const wizard = useRegistrationWizard()

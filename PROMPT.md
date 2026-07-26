@@ -165,3 +165,25 @@ Implementation notes:
    - `OrderSummary.vue`
 4. Added derived order pricing in `useRegistrationWizard.js`, including ticket, workshops, meals, merchandise, VIP workshop discount, and total.
 5. Merchandise cards use the shared frame in non-interactive mode because they contain nested controls such as selects and quantity buttons.
+
+## 2026-07-26 Component Architecture Cleanup
+
+User prompt summary:
+
+```text
+請優化 components 資料夾內的架構。
+Suggested grouping: Layout for large components such as nav/process/footer/steps,
+Common for medium components, Atom for small components such as card frame and
+form field.
+```
+
+Implementation notes:
+
+1. Reorganized registration components into feature-scoped layers:
+   - `layout/` for wizard shell components.
+   - `steps/` for Step 1-4 container components.
+   - `common/` for domain-level reusable cards, tabs, and summary.
+   - `atoms/` for small reusable controls/shells.
+2. Updated all imports in pages, layouts, and components.
+3. Added `src/components/registration/README.md` to document the structure and placement rules.
+4. Verified the move with a production build.

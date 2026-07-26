@@ -1,7 +1,7 @@
 <script setup>
 import { computed, ref, watch } from 'vue'
-import SessionCard from './SessionCard.vue'
-import SessionDateTabs from './SessionDateTabs.vue'
+import SessionCard from '../common/SessionCard.vue'
+import SessionDateTabs from '../common/SessionDateTabs.vue'
 import { doTimeRangesOverlap } from 'src/utils/schedule.js'
 
 const selectedSessionIds = defineModel('selectedSessionIds', {

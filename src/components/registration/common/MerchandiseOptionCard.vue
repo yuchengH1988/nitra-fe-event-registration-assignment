@@ -1,8 +1,8 @@
 <script setup>
 import { computed } from 'vue'
 import downTriangleUrl from 'src/assets/icons/down-triangle.svg'
-import QuantityStepper from './QuantityStepper.vue'
-import SelectableCardFrame from '../shared/SelectableCardFrame.vue'
+import QuantityStepper from '../atoms/QuantityStepper.vue'
+import SelectableCardFrame from '../atoms/SelectableCardFrame.vue'
 import { formatCurrency } from 'src/utils/currency.js'
 
 const props = defineProps({

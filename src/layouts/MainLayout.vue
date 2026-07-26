@@ -1,5 +1,5 @@
 <script setup>
-import AppNav from 'src/components/registration/AppNav.vue'
+import AppNav from 'src/components/registration/layout/AppNav.vue'
 import { event } from 'src/mocks/event.js'
 </script>
 

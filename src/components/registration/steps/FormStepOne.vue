@@ -1,7 +1,7 @@
 <script setup>
 import { computed } from 'vue'
-import FormField from './FormField.vue'
-import TicketOptionCard from './TicketOptionCard.vue'
+import FormField from '../atoms/FormField.vue'
+import TicketOptionCard from '../common/TicketOptionCard.vue'
 
 const attendee = defineModel('attendee', {
   type: Object,
