@@ -8,6 +8,10 @@ defineProps({
     type: Boolean,
     default: false,
   },
+  primaryDisabled: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 defineEmits(['back', 'next'])
@@ -28,6 +32,8 @@ defineEmits(['back', 'next'])
         unelevated
         no-caps
         class="next-button px-4 py-2.5 rounded text-subtitle2 text-inverse bg-accent-emphasis-rest"
+        :class="{ 'opacity-50': primaryDisabled }"
+        :disable="primaryDisabled"
         :label="primaryLabel"
         @click="$emit('next')"
       />
@@ -36,8 +42,12 @@ defineEmits(['back', 'next'])
 </template>
 
 <style scoped>
-.next-button:hover {
+.next-button:hover:not([disabled]) {
   background: var(--bg-accent-emphasis-hover);
+}
+
+.next-button[disabled] {
+  opacity: 0.5 !important;
 }
 
 .back-button:hover {

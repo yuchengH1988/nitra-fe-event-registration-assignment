@@ -247,6 +247,13 @@ export function useRegistrationWizard() {
     return step?.nextStepLabel ?? 'Submit Registration'
   })
 
+  const isSubmitDisabled = computed(
+    () =>
+      currentStep.value === REGISTRATION_STEPS.length &&
+      hasAttemptedSubmit.value &&
+      validationResult.value.all.length > 0,
+  )
+
   function goToStep(stepNumber) {
     const targetStep = REGISTRATION_STEPS.find((step) => step.number === stepNumber)
 
@@ -292,6 +299,8 @@ export function useRegistrationWizard() {
   }
 
   function handlePrimaryAction() {
+    if (isSubmitDisabled.value) return
+
     if (currentStep.value === REGISTRATION_STEPS.length) {
       submitRegistration()
       return
@@ -305,6 +314,7 @@ export function useRegistrationWizard() {
     currentStep,
     hasAttemptedSubmit,
     isSubmitting,
+    isSubmitDisabled,
     isSubmitted,
     confirmationNumber,
     registration,

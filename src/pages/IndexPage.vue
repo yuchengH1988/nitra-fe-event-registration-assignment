@@ -87,6 +87,7 @@ const wizard = useRegistrationWizard()
       <WizardFooter
         :primary-label="wizard.nextStepLabel.value"
         :show-back="wizard.canGoPrevious.value"
+        :primary-disabled="wizard.isSubmitDisabled.value"
         @back="wizard.goToPreviousStep"
         @next="wizard.handlePrimaryAction"
       />
