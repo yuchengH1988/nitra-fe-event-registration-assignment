@@ -23,20 +23,20 @@ export const semanticColors = {
       emphasis: orange[600],
     },
     success: {
-      default: green[600],
+      default: 'rgba(17, 146, 92, 1)',
       emphasis: green[700],
     },
     danger: {
-      default: red[500],
-      emphasis: red[600],
+      default: 'rgba(199, 26, 26, 1)',
+      emphasis: 'rgba(153, 20, 20, 1)',
     },
     info: {
-      default: blue[500],
+      default: 'rgba(26, 126, 199, 1)',
       emphasis: blue[600],
     },
     warning: {
-      default: yellow[800],
-      emphasis: yellow[900],
+      default: 'rgba(145, 129, 8, 1)',
+      emphasis: 'rgba(106, 95, 6, 1)',
     },
   },
   bg: {
@@ -179,7 +179,7 @@ export const semanticColors = {
         active: blue[200],
       },
       subtle: {
-        rest: blue[0],
+        rest: 'white',
         hover: blue[50],
         active: blue[100],
       },
@@ -202,7 +202,7 @@ export const semanticColors = {
         active: yellow[400],
       },
       subtle: {
-        rest: yellow[50],
+        rest: 'white',
         hover: yellow[100],
         active: yellow[200],
       },
