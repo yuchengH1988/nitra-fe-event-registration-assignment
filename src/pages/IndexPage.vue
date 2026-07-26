@@ -18,6 +18,7 @@ const wizard = useRegistrationWizard()
         :confirmation-number="wizard.confirmationNumber.value"
         :attendee-name="wizard.registration.attendee.fullName"
         :attendee-email="wizard.registration.attendee.email"
+        :ticket-type-name="wizard.selectedTicket.value?.name"
         @back-home="wizard.resetRegistration"
       />
     </template>
