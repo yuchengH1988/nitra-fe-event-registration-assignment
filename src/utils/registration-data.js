@@ -78,3 +78,20 @@ export function formatSessionTimeRange(item) {
 
   return `${formatter.format(new Date(item.date))} – ${formatter.format(new Date(item.endDate))}`
 }
+
+/**
+ * Formats a compact review label such as "Nov 15, 9:00 AM".
+ *
+ * @param {{ date: string }} item
+ * @returns {string}
+ */
+export function formatReviewSessionTime(item) {
+  return new Intl.DateTimeFormat('en-US', {
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+    timeZone: 'UTC',
+  }).format(new Date(item.date))
+}

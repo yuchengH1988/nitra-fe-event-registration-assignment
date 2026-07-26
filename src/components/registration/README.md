@@ -18,6 +18,8 @@ state, and own step-specific UI arrangement.
 - `FormStepOne.vue`
 - `FormStepTwo.vue`
 - `FormStepThree.vue`
+- `FormStepFour.vue`
+- `RegistrationConfirmation.vue`
 
 ## `common/`
 
@@ -30,6 +32,7 @@ atoms and may contain presentation logic for one card/list/summary pattern.
 - `MealOptionCard.vue`
 - `MerchandiseOptionCard.vue`
 - `OrderSummary.vue`
+- `ReviewSection.vue`
 
 ## `atoms/`
 

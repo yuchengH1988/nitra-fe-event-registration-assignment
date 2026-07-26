@@ -187,3 +187,22 @@ Implementation notes:
 2. Updated all imports in pages, layouts, and components.
 3. Added `src/components/registration/README.md` to document the structure and placement rules.
 4. Verified the move with a production build.
+
+## 2026-07-26 Step 4 Review and Submit
+
+User prompt summary:
+
+```text
+最後第四步驟。
+依據 README / AI_ZH / screenshots 的文件要求完成 Review & Submit。
+```
+
+Implementation notes:
+
+1. Added `FormStepFour.vue` for Review & Submit.
+2. Added `ReviewSection.vue` for reusable review blocks with edit links and error border states.
+3. Added `RegistrationConfirmation.vue` for the success state after valid submission.
+4. Connected Step 4 to existing wizard state: attendee data, selected sessions, selected add-ons, line items, grand total, and visible validation result.
+5. Submit now sets `hasAttemptedSubmit` and stays on Review when validation fails, so the review page can show unified errors and edit navigation.
+6. Process bar now accepts `invalidSteps` and shows step-level error indicators after submit validation fails.
+7. Successful submit hides the process bar/footer and shows the confirmation screen with a confirmation number and attendee email.

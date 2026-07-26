@@ -11,7 +11,7 @@ export const fontWeight = {
   bold: '680',
   semibold: '600',
   medium: '550',
-  regular: '400',
+  regular: '485',
 }
 
 export const lineHeight = {

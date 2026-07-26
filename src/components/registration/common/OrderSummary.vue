@@ -19,10 +19,12 @@ defineProps({
       Order Summary
     </h3>
     <div
-      v-for="(item, index) in lineItems"
+      v-for="item in lineItems"
       :key="item.id"
-      class="flex items-start justify-between "
-      :class="(index === lineItems.length - 1 && index !== 0) ? 'text-brand-emphasis text-sm-b' : 'text-sm text-neutral-muted'"
+      class="flex items-start justify-between gap-3"
+      :class="item.category === 'discount'
+        ? 'text-brand-emphasis text-sm-b'
+        : 'text-sm text-neutral-muted'"
     >
       <span class="min-w-0 flex-1 break-words">
         {{ item.label }}<template v-if="item.quantity > 1"> × {{ item.quantity }}</template>

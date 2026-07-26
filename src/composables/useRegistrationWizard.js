@@ -41,6 +41,7 @@ export function useRegistrationWizard() {
   const hasAttemptedSubmit = ref(false)
   const isSubmitting = ref(false)
   const isSubmitted = ref(false)
+  const confirmationNumber = ref('FTC2028-47291')
 
   const registration = reactive({
     attendee: { ...INITIAL_ATTENDEE },
@@ -171,6 +172,8 @@ export function useRegistrationWizard() {
     const items = [
       ticketLineItem.value,
       ...workshopLineItems.value,
+      ...mealLineItems.value,
+      ...merchandiseLineItems.value,
     ].filter(Boolean)
 
     if (workshopDiscount.value > 0) {
@@ -184,11 +187,6 @@ export function useRegistrationWizard() {
         total: -workshopDiscount.value,
       })
     }
-
-    items.push(
-      ...mealLineItems.value,
-      ...merchandiseLineItems.value,
-    )
 
     return items
   })
@@ -260,12 +258,24 @@ export function useRegistrationWizard() {
     hasAttemptedSubmit.value = true
 
     if (firstInvalidStep.value) {
-      goToStep(firstInvalidStep.value)
       return false
     }
 
     isSubmitted.value = true
     return true
+  }
+
+  function resetRegistration() {
+    Object.assign(registration.attendee, INITIAL_ATTENDEE)
+    registration.ticketTypeId = 'vip'
+    registration.selectedSessionIds = []
+    registration.selectedAddons.workshops = []
+    registration.selectedAddons.meals = []
+    registration.selectedAddons.merchandise = {}
+    currentStep.value = 1
+    hasAttemptedSubmit.value = false
+    isSubmitting.value = false
+    isSubmitted.value = false
   }
 
   function handlePrimaryAction() {
@@ -283,6 +293,7 @@ export function useRegistrationWizard() {
     hasAttemptedSubmit,
     isSubmitting,
     isSubmitted,
+    confirmationNumber,
     registration,
     ticketTypes,
     selectedTicket,
@@ -317,5 +328,6 @@ export function useRegistrationWizard() {
     goToNextStep,
     submitRegistration,
     handlePrimaryAction,
+    resetRegistration,
   }
 }

@@ -1,7 +1,9 @@
 <script setup>
 import FormStepOne from 'src/components/registration/steps/FormStepOne.vue'
+import FormStepFour from 'src/components/registration/steps/FormStepFour.vue'
 import FormStepThree from 'src/components/registration/steps/FormStepThree.vue'
 import FormStepTwo from 'src/components/registration/steps/FormStepTwo.vue'
+import RegistrationConfirmation from 'src/components/registration/steps/RegistrationConfirmation.vue'
 import ProcessBar from 'src/components/registration/layout/ProcessBar.vue'
 import WizardFooter from 'src/components/registration/layout/WizardFooter.vue'
 import { useRegistrationWizard } from 'src/composables/useRegistrationWizard.js'
@@ -11,9 +13,24 @@ const wizard = useRegistrationWizard()
 
 <template>
   <div class="flex flex-col flex-1 min-h-0 divide-y divide-solid divide-[color:var(--divider-default)]">
-    <ProcessBar :steps="wizard.steps" :current-step="wizard.currentStep.value" />
+    <template v-if="wizard.isSubmitted.value">
+      <RegistrationConfirmation
+        :confirmation-number="wizard.confirmationNumber.value"
+        :attendee-name="wizard.registration.attendee.fullName"
+        :attendee-email="wizard.registration.attendee.email"
+        @back-home="wizard.resetRegistration"
+      />
+    </template>
 
-    <main class="flex-1 min-h-0 overflow-y-auto">
+    <template v-else>
+      <ProcessBar
+        :steps="wizard.steps"
+        :current-step="wizard.currentStep.value"
+        :invalid-steps="wizard.invalidSteps.value"
+        @select-step="wizard.goToStep"
+      />
+
+      <main class="flex-1 min-h-0 overflow-y-auto">
       <div class="wrapper py-6 tablet:py-10">
         <FormStepOne
           v-if="wizard.currentStep.value === 1"
@@ -38,6 +55,19 @@ const wizard = useRegistrationWizard()
           :order-line-items="wizard.orderLineItems.value"
           :order-total="wizard.orderTotal.value"
         />
+        <FormStepFour
+          v-else-if="wizard.currentStep.value === 4"
+          :registration="wizard.registration"
+          :selected-ticket="wizard.selectedTicket.value"
+          :selected-sessions="wizard.selectedSessions.value"
+          :selected-workshops="wizard.selectedWorkshops.value"
+          :selected-meals="wizard.selectedMeals.value"
+          :selected-merchandise="wizard.selectedMerchandise.value"
+          :order-line-items="wizard.orderLineItems.value"
+          :order-total="wizard.orderTotal.value"
+          :validation-result="wizard.visibleValidationResult.value"
+          @edit-step="wizard.goToStep"
+        />
         <section
           v-else
           class="min-h-[320px] rounded border border-neutral-muted bg-surface-l1 p-6"
@@ -50,13 +80,14 @@ const wizard = useRegistrationWizard()
           </p>
         </section>
       </div>
-    </main>
+      </main>
 
-    <WizardFooter
-      :primary-label="wizard.nextStepLabel.value"
-      :show-back="wizard.canGoPrevious.value"
-      @back="wizard.goToPreviousStep"
-      @next="wizard.handlePrimaryAction"
-    />
+      <WizardFooter
+        :primary-label="wizard.nextStepLabel.value"
+        :show-back="wizard.canGoPrevious.value"
+        @back="wizard.goToPreviousStep"
+        @next="wizard.handlePrimaryAction"
+      />
+    </template>
   </div>
 </template>
