@@ -1,4 +1,6 @@
 :root {
+  --font-family-sans: Inter, ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
   --font-size-h1: 32px;
   --font-size-h2: 28px;
   --font-size-h3: 24px;
@@ -8,6 +10,7 @@
   --font-size-lg: 16px;
   --font-size-sm: 12px;
   --font-size-xs: 11px;
+  --font-size-ssm: 10px;
 
   --line-height-h1: 40px;
   --line-height-h2: 32px;
@@ -18,6 +21,12 @@
   --line-height-lg: 24px;
   --line-height-sm: 16px;
   --line-height-xs: 14px;
+  --line-height-ss: 10px;
+}
+
+html,
+body {
+  font-family: var(--font-family-sans);
 }
 
 @media (max-width: 1023px) {

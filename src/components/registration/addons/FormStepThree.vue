@@ -1,5 +1,6 @@
 <script setup>
 import { computed, ref } from 'vue'
+import infoIconUrl from 'src/assets/icons/circle-info.svg'
 import AddonCategoryTabs from './AddonCategoryTabs.vue'
 import MealOptionCard from './MealOptionCard.vue'
 import MerchandiseOptionCard from './MerchandiseOptionCard.vue'
@@ -92,7 +93,7 @@ function isWorkshopUnavailable(workshop) {
 
 <template>
   <section aria-labelledby="addons-heading" class="grid grid-cols-[minmax(0,1fr)_320px] gap-8 max-desktop:grid-cols-1">
-    <div class="space-y-5">
+    <div class="space-y-4 tablet:space-y-6">
       <h3 id="addons-heading" class="text-h3 text-neutral">
         Select Add-ons
       </h3>
@@ -103,7 +104,7 @@ function isWorkshopUnavailable(workshop) {
         @select="activeTab = $event"
       />
 
-      <div v-if="activeTab === 'workshop'" class="space-y-4">
+      <div v-if="activeTab === 'workshop'" class="space-y-4 tablet:space-y-6">
         <WorkshopOptionCard
           v-for="workshop in workshops"
           :key="workshop.id"
@@ -114,7 +115,7 @@ function isWorkshopUnavailable(workshop) {
         />
       </div>
 
-      <div v-else-if="activeTab === 'meal'" class="space-y-4">
+      <div v-else-if="activeTab === 'meal'" class="space-y-4 tablet:space-y-6">
         <MealOptionCard
           v-for="meal in meals"
           :key="meal.id"
@@ -124,15 +125,23 @@ function isWorkshopUnavailable(workshop) {
         />
       </div>
 
-      <div v-else class="space-y-4">
+      <div v-else class="space-y-4 tablet:space-y-6">
         <div
           v-if="hasMerchandiseSelected"
-          class="rounded-m border border-info-emphasis bg-info-subtle-rest p-4 text-xs text-neutral"
+          class="inline-flex gap-3 rounded border border-info-opacity bg-info-subtle-rest p-4"
         >
-          <span class="font-semibold">Shipping Information</span>
-          <p class="mt-1">
-            Merchandise items will be shipped to your address one week before the conference. Please ensure your shipping address in Step 1 is correct.
-          </p>
+          <img
+            class="size-5"
+            :src="infoIconUrl"
+            alt=""
+            aria-hidden="true"
+          >
+          <div>
+            <span class="text-subtitle2">Shipping Information</span>
+            <p class="mt-1 text-subtitle2 font-regular">
+              Merchandise items will be shipped to your address one week before the conference. Please ensure your shipping address in Step 1 is correct.
+            </p>
+          </div>
         </div>
 
         <MerchandiseOptionCard

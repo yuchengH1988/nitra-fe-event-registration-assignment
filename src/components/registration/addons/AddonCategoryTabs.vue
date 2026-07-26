@@ -14,12 +14,12 @@ defineEmits(['select'])
 </script>
 
 <template>
-  <div class="inline-flex rounded bg-surface-l2 p-1" role="tablist" aria-label="Add-on categories">
+  <div class="inline-flex rounded bg-surface-l2 p-1 gap-1" role="tablist" aria-label="Add-on categories">
     <button
       v-for="tab in tabs"
       :key="tab.id"
       type="button"
-      class="min-w-[128px] rounded-m px-4 py-2 text-sm-b transition-colors"
+      class="rounded-m px-4 py-2 text-sm-b transition-colors"
       :class="tab.id === activeTab
         ? 'bg-brand-emphasis-rest text-inverse'
         : 'text-neutral-muted hover:bg-neutral-muted-hover'"

@@ -24,6 +24,10 @@ export const letterSpacing = {
   none: '0',
 }
 
+export const fontFamily = {
+  sans: 'var(--font-family-sans)',
+}
+
 export const borderRadius = {
   DEFAULT: '8px',
   m: '6px',
@@ -41,6 +45,7 @@ export const typographyShortcuts = [{
   'text-sm-b': 'text-[length:var(--font-size-sm)] line-height-[var(--line-height-sm)] font-medium',
   'text-xs': 'text-[length:var(--font-size-xs)] line-height-[var(--line-height-xs)] font-regular',
   'text-xs-b': 'text-[length:var(--font-size-xs)] line-height-[var(--line-height-xs)] font-medium',
+  'text-ss': 'text-[length:var(--font-size-ss)] line-height-[var(--line-height-ss)] font-regular',
 }]
 
 export const breakpoints = {
@@ -53,6 +58,7 @@ export const uiTheme = {
   colors,
   fontSize,
   fontWeight,
+  fontFamily,
   lineHeight,
   letterSpacing,
   borderRadius,
