@@ -25,7 +25,7 @@ export const letterSpacing = {
 }
 
 export const borderRadius = {
-  default: '8px',
+  DEFAULT: '8px',
   m: '6px',
 }
 

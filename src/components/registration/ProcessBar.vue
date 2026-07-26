@@ -20,26 +20,30 @@ defineProps({
         class="process-step flex items-center gap-[10px] min-w-0"
         :class="[
           index < steps.length - 1 ? 'tablet:flex-1' : 'flex-none',
-          step.number === currentStep ? 'text-neutral' : 'text-neutral-quiet',
+          step.number <= currentStep ? 'text-neutral' : 'text-neutral-quiet',
         ]"
       >
         <span
           class="process-step__marker inline-flex flex-none items-center justify-center size-[32px] rounded-full text-sm-b"
-          :class="step.number === currentStep
+          :class="step.number <= currentStep
             ? 'bg-brand-emphasis-rest text-inverse'
             : 'bg-surface-l2 text-neutral-quiet'"
         >
-          {{ step.number }}
+          <q-icon v-if="step.number < currentStep" name="check" size="20px" aria-hidden="true" />
+          <template v-else>
+            {{ step.number }}
+          </template>
         </span>
         <span
           class="process-step__label flex-none text-sm whitespace-nowrap"
-          :class="step.number === currentStep ? 'text-neutral font-semibold max-mobile:flex-1' : 'text-neutral-quiet max-mobile:hidden'"
+          :class="step.number <= currentStep ? 'text-neutral font-semibold max-mobile:flex-1' : 'text-neutral-quiet max-mobile:hidden'"
         >
           {{ step.label }}
         </span>
         <span
           v-if="index < steps.length - 1"
-          class="process-step__line flex-auto h-0.5 mx-1 bg-[var(--divider-default)] max-tablet:hidden"
+          class="process-step__line flex-auto h-0.5 mx-1 max-tablet:hidden"
+          :class="step.number < currentStep ? 'bg-brand-emphasis-rest' : 'bg-[var(--divider-default)]'"
           aria-hidden="true"
         />
       </li>

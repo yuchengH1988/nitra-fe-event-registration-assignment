@@ -1,5 +1,6 @@
 <script setup>
 import FormStepOne from 'src/components/registration/FormStepOne.vue'
+import FormStepTwo from 'src/components/registration/sessions/FormStepTwo.vue'
 import ProcessBar from 'src/components/registration/ProcessBar.vue'
 import WizardFooter from 'src/components/registration/WizardFooter.vue'
 import { useRegistrationWizard } from 'src/composables/useRegistrationWizard.js'
@@ -12,7 +13,7 @@ const wizard = useRegistrationWizard()
     <ProcessBar :steps="wizard.steps" :current-step="wizard.currentStep.value" />
 
     <main class="flex-1 min-h-0 overflow-y-auto">
-      <div class="wrapper py-4 tablet:py-10">
+      <div class="wrapper py-6 tablet:py-10">
         <FormStepOne
           v-if="wizard.currentStep.value === 1"
           v-model:attendee="wizard.registration.attendee"
@@ -21,9 +22,14 @@ const wizard = useRegistrationWizard()
           :has-merchandise-selected="wizard.hasMerchandiseSelected.value"
           :show-validation="wizard.hasAttemptedSubmit.value"
         />
+        <FormStepTwo
+          v-else-if="wizard.currentStep.value === 2"
+          v-model:selected-session-ids="wizard.registration.selectedSessionIds"
+          :grouped-sessions="wizard.groupedSessions.value"
+        />
         <section
           v-else
-          class="min-h-[320px] rounded-default border border-neutral-muted bg-surface-l1 p-6"
+          class="min-h-[320px] rounded border border-neutral-muted bg-surface-l1 p-6"
         >
           <p class="text-subtitle1 text-neutral">
             {{ wizard.steps[wizard.currentStep.value - 1].label }}
@@ -37,6 +43,8 @@ const wizard = useRegistrationWizard()
 
     <WizardFooter
       :primary-label="wizard.nextStepLabel.value"
+      :show-back="wizard.canGoPrevious.value"
+      @back="wizard.goToPreviousStep"
       @next="wizard.handlePrimaryAction"
     />
   </div>

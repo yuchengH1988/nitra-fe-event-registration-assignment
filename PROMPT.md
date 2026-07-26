@@ -73,3 +73,68 @@ Implementation notes:
 5. Updated Step 1 to consume wizard state from the composable instead of owning raw state in the page.
 6. Updated the footer primary action and label to follow the current step.
 7. Replaced remaining hand-written typography utility values in registration components with project typography shortcuts.
+
+## 2026-07-25 Step 2 Sessions UI
+
+User prompt summary:
+
+```text
+根據截圖製作第二階段表單。
+注意 components 有效拆分，不要全部寫在一起。
+```
+
+Implementation notes:
+
+1. Added Step 2 session selection UI and wired it into the existing wizard state.
+2. Split the Step 2 UI into focused components:
+   - `FormStepTwo.vue`
+   - `SessionDateTabs.vue`
+   - `SessionCard.vue`
+3. Added `utils/registration-data.js` for session grouping, capacity helpers, and UTC-based date/time labels.
+4. Implemented date tabs for Nov 15 / Nov 16 using mock session data.
+5. Implemented selectable session cards with track badge, speaker/title, time range, capacity progress, remaining seats, and selected checkbox state.
+6. Full sessions follow the README requirement and are disabled when `registered >= capacity`; the screenshot shows a sold-out selected state, but the authoritative README says full sessions should be disabled.
+7. Updated the process bar so completed previous steps show a check icon and completed connector color.
+8. Updated the footer to show Back on Step 2 and to change the primary label to `Next: Add-ons`.
+
+## 2026-07-26 Session Card Capacity Rules
+
+User prompt summary:
+
+```text
+SessionCard CSS typography has been adjusted manually.
+Enhance capacity-bar__fill and availability-text:
+- >50% fill uses orange/600; availability text uses orange/700.
+- <50% fill uses bg/brand/emphasis/rest; availability text uses text/brand/emphasis.
+- Sold out uses text/danger/emphasis.
+- Unselectable cards caused by time overlap use text/warning/default for text/bar.
+When a session is selected, overlapping sessions cannot be selected.
+Selecting a session should reduce the displayed remaining spots by one.
+```
+
+Implementation notes:
+
+1. Preserved the manually adjusted `SessionCard.vue` typography and icon structure.
+2. Added dynamic capacity colors in `SessionCard.vue`.
+3. Added selected-count capacity adjustment so `13 spots left` becomes `12 spots left` after selecting that session.
+4. Added time-overlap unavailable logic in `FormStepTwo.vue`; overlapping, unselected cards are disabled, while selected cards remain clickable so the user can unselect them.
+5. Kept sold-out sessions disabled and styled with danger emphasis.
+
+## 2026-07-26 Disabled Session Card Visual Correction
+
+User prompt summary:
+
+```text
+不可選的樣式主要是顏色校正。
+Badge should remove background/border-like treatment.
+The checkbox frame should be removed.
+Do not add an overlay layer on top of the card; change the actual colors.
+```
+
+Implementation notes:
+
+1. Updated `SessionCard.vue` disabled styling to use CSS variable color overrides instead of opacity or overlay behavior.
+2. Disabled session cards now keep the card shadow and surface but switch the internal text colors to disabled semantic text.
+3. Disabled badge background is transparent and uses muted text.
+4. Disabled checkbox border is transparent, so the empty box frame is visually removed.
+5. Disabled capacity bar and availability text use warning semantic color.

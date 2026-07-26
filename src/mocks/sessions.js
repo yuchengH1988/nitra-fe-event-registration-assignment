@@ -51,7 +51,7 @@ export const sessions = [
     title: 'Modern CSS: Beyond Tailwind',
     speaker: 'Yuki Tanaka',
     speakerTitle: 'Design Systems Lead, DesignLab',
-    track: 'frontend',
+    track: 'frontend-design',
     date: '2028-11-15T13:00:00Z',
     endDate: '2028-11-15T14:30:00Z',
     capacity: 80,

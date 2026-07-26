@@ -26,7 +26,7 @@ const formatCurrency = (amount) =>
 <template>
   <button
     type="button"
-    class="ticket-card relative flex flex-col gap-3 text-left p-5 min-h-none tablet:min-h-[378px] rounded-m bg-surface-l1 text-neutral cursor-pointer"
+    class="ticket-card relative flex flex-col gap-3 text-left p-5 min-h-none tablet:min-h-[292px] rounded-m bg-surface-l1 text-neutral cursor-pointer"
     :class="{ 'ticket-card--selected bg-brand-subtle-rest': selected }"
     :aria-pressed="selected"
     @click="$emit('select')"

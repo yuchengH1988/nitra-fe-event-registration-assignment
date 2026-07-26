@@ -6,16 +6,17 @@ import {
 import { addons } from 'src/mocks/addons.js'
 import { event } from 'src/mocks/event.js'
 import { sessions } from 'src/mocks/sessions.js'
+import { groupSessionsByDate } from 'src/utils/registration-data.js'
 import {
   findTimeConflicts,
   findWorkshopSessionConflicts,
 } from 'src/utils/schedule.js'
 
 export const REGISTRATION_STEPS = [
-  { number: 1, label: 'Attendee Info' },
-  { number: 2, label: 'Sessions' },
-  { number: 3, label: 'Add-ons' },
-  { number: 4, label: 'Review' },
+  { number: 1, label: 'Attendee Info', nextStepLabel: 'Next: Session Selection' },
+  { number: 2, label: 'Sessions', nextStepLabel: 'Next: Add-ons' },
+  { number: 3, label: 'Add-ons', nextStepLabel: 'Next: Review' },
+  { number: 4, label: 'Review', nextStepLabel: 'Submit Registration' },
 ]
 
 const INITIAL_ATTENDEE = {
@@ -61,6 +62,8 @@ export function useRegistrationWizard() {
   const selectedSessions = computed(() =>
     sessions.filter((session) => registration.selectedSessionIds.includes(session.id)),
   )
+
+  const groupedSessions = computed(() => groupSessionsByDate(sessions))
 
   const workshops = computed(() =>
     addons.filter((addon) => addon.category === 'workshop'),
@@ -128,9 +131,11 @@ export function useRegistrationWizard() {
   const canGoPrevious = computed(() => currentStep.value > 1)
   const canGoNext = computed(() => currentStep.value < REGISTRATION_STEPS.length)
   const nextStepLabel = computed(() => {
-    if (currentStep.value >= REGISTRATION_STEPS.length) return 'Submit Registration'
+    const step = REGISTRATION_STEPS.find(
+      (item) => item.number === currentStep.value,
+    )
 
-    return `Next: ${REGISTRATION_STEPS[currentStep.value].label}`
+    return step?.nextStepLabel ?? 'Submit Registration'
   })
 
   function goToStep(stepNumber) {
@@ -184,6 +189,7 @@ export function useRegistrationWizard() {
     ticketTypes,
     selectedTicket,
     selectedSessions,
+    groupedSessions,
     workshops,
     meals,
     merchandise,
