@@ -23,7 +23,7 @@ const { locale } = useI18n()
       v-for="group in groups"
       :key="group.date"
       type="button"
-      class="rounded px-5 py-2 text-[13px] font-semibold transition-colors"
+      class="rounded-lg px-5 py-2 text-[13px] font-semibold transition-colors"
       :class="group.date === activeDate
         ? 'bg-brand-emphasis-rest text-inverse'
         : 'text-neutral-muted hover:bg-neutral-muted-hover'"

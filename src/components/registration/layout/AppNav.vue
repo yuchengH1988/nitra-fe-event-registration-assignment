@@ -38,7 +38,7 @@ function switchLocale(targetLocale) {
           v-for="targetLocale in SUPPORT_LOCALES"
           :key="targetLocale"
           type="button"
-          class="rounded-m px-3 py-1.5 text-sm-b transition-colors"
+          class="rounded-lg px-3 py-1.5 gap-1 text-sm-b transition-colors"
           :class="targetLocale === locale
             ? 'bg-brand-emphasis-rest text-inverse'
             : 'text-neutral-muted hover:bg-neutral-muted-hover'"

@@ -22,7 +22,7 @@ const { t } = useI18n()
       v-for="tab in tabs"
       :key="tab.id"
       type="button"
-      class="rounded-m px-4 py-2 text-sm-b transition-colors"
+      class="rounded-lg px-4 py-2 text-sm-b transition-colors"
       :class="tab.id === activeTab
         ? 'bg-brand-emphasis-rest text-inverse'
         : 'text-neutral-muted hover:bg-neutral-muted-hover'"

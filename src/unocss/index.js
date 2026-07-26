@@ -31,6 +31,7 @@ export const fontFamily = {
 export const borderRadius = {
   '2xl': '12px',
   DEFAULT: '10px',
+  lg: '8px',
   m: '6px',
 }
 
