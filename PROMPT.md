@@ -262,3 +262,33 @@ Implementation notes:
 3. Existing top-level validation summary keeps the full human-readable messages.
 4. Email validation now uses a stricter email pattern.
 5. Phone validation accepts E.164 international numbers such as `+886912345678` and common US formats such as `(415) 555-1234`, `415-555-1234`, `415 555 1234`, and `+1 415 555 1234`.
+
+## 2026-07-26 Workshop Disabled Card Styling
+
+User prompt summary:
+
+```text
+In Select Add-ons > Workshops, apply the disabled card style that was already
+done for session cards.
+```
+
+Implementation notes:
+
+1. Updated `WorkshopOptionCard.vue` to use disabled-state color variables for title, description, time, price, and availability text.
+2. Kept the shared `SelectableCardFrame` border/shadow/disabled shell behavior.
+3. Disabled workshop cards now change internal colors directly rather than using opacity, matching the session-card approach.
+
+## 2026-07-26 Workshop Time Conflict Hint
+
+User prompt summary:
+
+```text
+If a workshop such as Hands-on Vue.js Testing cannot be selected, show a hint below it:
+"Unavailable due to a time conflict with a selected session".
+```
+
+Implementation notes:
+
+1. Added a workshop unavailable reason helper in `FormStepThree.vue`.
+2. Workshop cards still show `Sold Out` for full workshops.
+3. Workshops that cannot be selected because their time overlaps selected sessions now show `Unavailable due to a time conflict with a selected session` under the availability text, using warning text color.

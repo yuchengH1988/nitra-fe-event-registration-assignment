@@ -88,12 +88,21 @@ function isWorkshopUnavailable(workshop) {
 
   if (selected) return false
 
+  return Boolean(getWorkshopUnavailableReason(workshop))
+}
+
+function getWorkshopUnavailableReason(workshop) {
   const isFull = Number(workshop.registered) >= Number(workshop.capacity)
+
+  if (isFull) return 'Sold Out'
+
   const conflictsWithSession = props.selectedSessions.some((session) =>
     doTimeRangesOverlap(workshop, session),
   )
 
-  return isFull || conflictsWithSession
+  return conflictsWithSession
+    ? 'Unavailable due to a time conflict with a selected session'
+    : ''
 }
 </script>
 
@@ -117,6 +126,7 @@ function isWorkshopUnavailable(workshop) {
           :workshop="workshop"
           :selected="selectedAddons.workshops.includes(workshop.id)"
           :unavailable="isWorkshopUnavailable(workshop)"
+          :unavailable-reason="getWorkshopUnavailableReason(workshop)"
           @toggle="toggleWorkshop(workshop)"
         />
       </div>
