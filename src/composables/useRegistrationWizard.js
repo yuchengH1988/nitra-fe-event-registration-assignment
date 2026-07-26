@@ -168,7 +168,10 @@ export function useRegistrationWizard() {
   })
 
   const orderLineItems = computed(() => {
-    const items = [...subtotalLineItems.value]
+    const items = [
+      ticketLineItem.value,
+      ...workshopLineItems.value,
+    ].filter(Boolean)
 
     if (workshopDiscount.value > 0) {
       items.push({
@@ -181,6 +184,11 @@ export function useRegistrationWizard() {
         total: -workshopDiscount.value,
       })
     }
+
+    items.push(
+      ...mealLineItems.value,
+      ...merchandiseLineItems.value,
+    )
 
     return items
   })
