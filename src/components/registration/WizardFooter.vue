@@ -14,7 +14,7 @@ defineEmits(['back', 'next'])
 </script>
 
 <template>
-  <footer class="wizard-footer flex-none py-4 bg-surface-l0">
+  <footer class="wizard-footer flex-none py-2 tablet:py-4 bg-surface-l0">
     <div class="wrapper flex items-center" :class="showBack ? 'justify-between' : 'justify-end'">
       <q-btn
         v-if="showBack"

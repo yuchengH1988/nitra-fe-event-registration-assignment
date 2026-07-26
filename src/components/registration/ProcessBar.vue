@@ -12,7 +12,7 @@ defineProps({
 </script>
 
 <template>
-  <nav class="process-bar py-4 wrapper flex items-center flex-none w-full" aria-label="Registration progress">
+  <nav class="process-bar py-2 tablet:py-4 wrapper flex items-center flex-none w-full" aria-label="Registration progress">
     <ol class="flex list-none m-0 p-0 tablet:gap-x-4 gap-y-2 items-center w-full max-tablet:justify-between">
       <li
         v-for="(step, index) in steps"
