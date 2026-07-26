@@ -30,6 +30,10 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  includedMealIds: {
+    type: Array,
+    default: () => [],
+  },
   orderLineItems: {
     type: Array,
     required: true,
@@ -63,6 +67,8 @@ function toggleWorkshop(workshop) {
 }
 
 function toggleMeal(mealId) {
+  if (props.includedMealIds.includes(mealId)) return
+
   const ids = selectedAddons.value.meals
 
   selectedAddons.value.meals = ids.includes(mealId)
@@ -120,7 +126,8 @@ function isWorkshopUnavailable(workshop) {
           v-for="meal in meals"
           :key="meal.id"
           :meal="meal"
-          :selected="selectedAddons.meals.includes(meal.id)"
+          :selected="selectedAddons.meals.includes(meal.id) || includedMealIds.includes(meal.id)"
+          :included="includedMealIds.includes(meal.id)"
           @toggle="toggleMeal(meal.id)"
         />
       </div>

@@ -28,6 +28,8 @@ const INITIAL_ATTENDEE = {
   shippingAddress: '',
 }
 
+const VIP_INCLUDED_MEAL_IDS = ['meal1']
+
 /**
  * Creates the feature-scoped state for the four-step registration wizard.
  *
@@ -85,7 +87,16 @@ export function useRegistrationWizard() {
   )
 
   const selectedMeals = computed(() =>
-    meals.value.filter((meal) => registration.selectedAddons.meals.includes(meal.id)),
+    meals.value.filter((meal) =>
+      registration.selectedAddons.meals.includes(meal.id) ||
+      includedMealIds.value.includes(meal.id),
+    ),
+  )
+
+  const includedMealIds = computed(() =>
+    registration.ticketTypeId === 'vip'
+      ? VIP_INCLUDED_MEAL_IDS
+      : [],
   )
 
   const selectedMerchandise = computed(() =>
@@ -130,11 +141,13 @@ export function useRegistrationWizard() {
     selectedMeals.value.map((meal) => ({
       id: meal.id,
       category: 'meal',
-      label: meal.name,
+      label: includedMealIds.value.includes(meal.id)
+        ? `${meal.name} (Included with VIP ticket)`
+        : meal.name,
       quantity: 1,
-      unitPrice: meal.price,
-      subtotal: meal.price,
-      total: meal.price,
+      unitPrice: includedMealIds.value.includes(meal.id) ? 0 : meal.price,
+      subtotal: includedMealIds.value.includes(meal.id) ? 0 : meal.price,
+      total: includedMealIds.value.includes(meal.id) ? 0 : meal.price,
     })),
   )
 
@@ -304,6 +317,7 @@ export function useRegistrationWizard() {
     merchandise,
     selectedWorkshops,
     selectedMeals,
+    includedMealIds,
     selectedMerchandise,
     hasMerchandiseSelected,
     ticketLineItem,

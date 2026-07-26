@@ -206,3 +206,59 @@ Implementation notes:
 5. Submit now sets `hasAttemptedSubmit` and stays on Review when validation fails, so the review page can show unified errors and edit navigation.
 6. Process bar now accepts `invalidSteps` and shows step-level error indicators after submit validation fails.
 7. Successful submit hides the process bar/footer and shows the confirmation screen with a confirmation number and attendee email.
+
+## 2026-07-26 VIP Included Meal
+
+User prompt summary:
+
+```text
+When VIP is selected and the user opens Meal Packages, the Lunch option should
+be directly included and impossible to remove because it is included in the VIP
+ticket price. Asked whether the price should say "VIP included" or another
+wording.
+```
+
+Implementation notes:
+
+1. Chose the wording `Included with VIP ticket` because it explains both the included price and why the option cannot be removed.
+2. Modeled the included lunch as derived state via `includedMealIds`, not as a manual `selectedAddons.meals` mutation. This avoids leaving hidden auto-added data if the ticket type changes later.
+3. Meal Packages now marks Standard Lunch as selected and disabled for VIP.
+4. Pricing treats the included lunch as a $0 meal line item labeled `Standard Lunch (Both Days) (Included with VIP ticket)`.
+5. This request specifically targets VIP behavior. README also lists lunch as included for General, but that broader interpretation is left as a separate product decision unless requested.
+
+## 2026-07-26 Review Shipping Address Required Row
+
+User prompt summary:
+
+```text
+In the Review step, if merchandise is selected, Attendee Information should show
+Shipping Address even when it is empty because it becomes a required field.
+```
+
+Implementation notes:
+
+1. Updated `FormStepFour.vue` so Shipping Address is always included in attendee review rows when merchandise is selected.
+2. Passed `hasMerchandiseSelected` from `IndexPage.vue` to Step 4.
+3. Existing validation still supplies the required error message after submit.
+
+## 2026-07-26 Review Error Text and Contact Format Validation
+
+User prompt summary:
+
+```text
+Adjust Review error text styles.
+The top error summary is correct.
+In Attendee Information, normal required fields should display "— (required)".
+Shipping address required by merchandise should display
+"— (required for merchandise)".
+Also add email format validation and phone format validation. Phone should
+accept international or US phone input.
+```
+
+Implementation notes:
+
+1. Updated Review field-level display so missing required values use compact labels instead of full validation sentences.
+2. Shipping Address now displays `— (required for merchandise)` when merchandise makes it required.
+3. Existing top-level validation summary keeps the full human-readable messages.
+4. Email validation now uses a stricter email pattern.
+5. Phone validation accepts E.164 international numbers such as `+886912345678` and common US formats such as `(415) 555-1234`, `415-555-1234`, `415 555 1234`, and `+1 415 555 1234`.

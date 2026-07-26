@@ -29,7 +29,8 @@ export const fontFamily = {
 }
 
 export const borderRadius = {
-  DEFAULT: '8px',
+  '2xl': '12px',
+  DEFAULT: '10px',
   m: '6px',
 }
 

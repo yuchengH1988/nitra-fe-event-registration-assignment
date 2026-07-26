@@ -29,6 +29,10 @@ const props = defineProps({
     type: Array,
     required: true,
   },
+  hasMerchandiseSelected: {
+    type: Boolean,
+    default: false,
+  },
   orderLineItems: {
     type: Array,
     required: true,
@@ -55,7 +59,7 @@ const attendeeRows = computed(() => {
   ]
 
   const shippingAddress = props.registration.attendee.shippingAddress?.trim()
-  if (shippingAddress) {
+  if (shippingAddress || props.hasMerchandiseSelected) {
     rows.push(['Shipping Address', shippingAddress, 'shippingAddress'])
   }
 
@@ -87,6 +91,26 @@ const selectedAddons = computed(() => [
 
 function getFieldError(field) {
   return props.validationResult.byStep[1]?.find((error) => error.field === field)?.message ?? ''
+}
+
+function getFieldErrorCode(field) {
+  return props.validationResult.byStep[1]?.find((error) => error.field === field)?.code ?? ''
+}
+
+function getReviewFieldValue(value, field) {
+  if (value) return value
+
+  const code = getFieldErrorCode(field)
+
+  if (code === 'REQUIRED_SHIPPING_ADDRESS') {
+    return '— (required for merchandise)'
+  }
+
+  if (code.startsWith('REQUIRED_')) {
+    return '— (required)'
+  }
+
+  return '-'
 }
 
 function getStepErrors(step) {
@@ -131,7 +155,10 @@ function getStepErrors(step) {
             class="text-right max-mobile:text-left"
             :class="getFieldError(field) ? 'text-danger' : 'text-neutral'"
           >
-            {{ value || getFieldError(field) || '-' }}
+            {{ getReviewFieldValue(value, field) }}
+            <span v-if="value && getFieldError(field)" class="ml-2">
+              — {{ getFieldError(field) }}
+            </span>
           </dd>
         </div>
       </dl>
@@ -193,12 +220,15 @@ function getStepErrors(step) {
         <div
           v-for="item in orderLineItems"
           :key="item.id"
-          class="flex items-start justify-between gap-4 text-sm text-neutral-muted"
+          class="flex items-start justify-between gap-4"
+          :class="item.category === 'discount'
+            ? 'text-brand-emphasis text-sm-b'
+            : 'text-sm text-neutral-muted'"
         >
           <span>
             {{ item.label }}<template v-if="item.quantity > 1"> × {{ item.quantity }}</template>
           </span>
-          <span :class="item.total < 0 && 'text-brand-emphasis'">
+          <span>
             {{ formatCurrency(item.total) }}
           </span>
         </div>

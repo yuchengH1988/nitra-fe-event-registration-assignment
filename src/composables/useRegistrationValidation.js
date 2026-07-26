@@ -17,11 +17,15 @@ function createError(step, code, field, message, relatedIds = []) {
 }
 
 function isValidEmail(email) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+  return /^[A-Za-z0-9.!#$%&'*+/=?^_`{|}~-]+@[A-Za-z0-9-]+(?:\.[A-Za-z0-9-]+)+$/.test(email)
 }
 
 function isValidPhone(phone) {
-  return /^[+()\d\s-]{7,}$/.test(phone)
+  const normalized = phone.trim()
+  const e164Phone = /^\+[1-9]\d{7,14}$/
+  const usPhone = /^(?:\+1[\s.-]?)?(?:\([2-9]\d{2}\)|[2-9]\d{2})[\s.-]?[2-9]\d{2}[\s.-]?\d{4}$/
+
+  return e164Phone.test(normalized) || usPhone.test(normalized)
 }
 
 /**
@@ -56,7 +60,12 @@ export function validateRegistration(payload) {
   }
 
   if (registration.attendee.phone.trim() && !isValidPhone(registration.attendee.phone)) {
-    byStep[1].push(createError(1, 'INVALID_PHONE', 'phone', 'Enter a valid phone number.'))
+    byStep[1].push(createError(
+      1,
+      'INVALID_PHONE',
+      'phone',
+      'Enter a valid international or US phone number.',
+    ))
   }
 
   if (!registration.ticketTypeId) {

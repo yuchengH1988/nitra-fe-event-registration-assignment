@@ -52,6 +52,7 @@ const wizard = useRegistrationWizard()
           :meals="wizard.meals.value"
           :merchandise="wizard.merchandise.value"
           :selected-sessions="wizard.selectedSessions.value"
+          :included-meal-ids="wizard.includedMealIds.value"
           :order-line-items="wizard.orderLineItems.value"
           :order-total="wizard.orderTotal.value"
         />
@@ -63,6 +64,7 @@ const wizard = useRegistrationWizard()
           :selected-workshops="wizard.selectedWorkshops.value"
           :selected-meals="wizard.selectedMeals.value"
           :selected-merchandise="wizard.selectedMerchandise.value"
+          :has-merchandise-selected="wizard.hasMerchandiseSelected.value"
           :order-line-items="wizard.orderLineItems.value"
           :order-total="wizard.orderTotal.value"
           :validation-result="wizard.visibleValidationResult.value"
