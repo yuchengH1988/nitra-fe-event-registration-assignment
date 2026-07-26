@@ -99,6 +99,96 @@ export function useRegistrationWizard() {
 
   const hasMerchandiseSelected = computed(() => selectedMerchandise.value.length > 0)
 
+  const ticketLineItem = computed(() => {
+    if (!selectedTicket.value) return null
+
+    return {
+      id: selectedTicket.value.id,
+      category: 'ticket',
+      label: `${selectedTicket.value.name} Ticket`,
+      quantity: 1,
+      unitPrice: selectedTicket.value.price,
+      subtotal: selectedTicket.value.price,
+      total: selectedTicket.value.price,
+    }
+  })
+
+  const workshopLineItems = computed(() =>
+    selectedWorkshops.value.map((workshop) => ({
+      id: workshop.id,
+      category: 'workshop',
+      label: workshop.name,
+      quantity: 1,
+      unitPrice: workshop.price,
+      subtotal: workshop.price,
+      total: workshop.price,
+    })),
+  )
+
+  const mealLineItems = computed(() =>
+    selectedMeals.value.map((meal) => ({
+      id: meal.id,
+      category: 'meal',
+      label: meal.name,
+      quantity: 1,
+      unitPrice: meal.price,
+      subtotal: meal.price,
+      total: meal.price,
+    })),
+  )
+
+  const merchandiseLineItems = computed(() =>
+    selectedMerchandise.value.map((item) => ({
+      id: item.id,
+      category: 'merchandise',
+      label: item.name,
+      quantity: item.quantity,
+      unitPrice: item.price,
+      subtotal: item.price * item.quantity,
+      total: item.price * item.quantity,
+    })),
+  )
+
+  const subtotalLineItems = computed(() =>
+    [
+      ticketLineItem.value,
+      ...workshopLineItems.value,
+      ...mealLineItems.value,
+      ...merchandiseLineItems.value,
+    ].filter(Boolean),
+  )
+
+  const workshopDiscount = computed(() => {
+    if (registration.ticketTypeId !== 'vip') return 0
+
+    return workshopLineItems.value.reduce(
+      (total, item) => total + item.subtotal * 0.1,
+      0,
+    )
+  })
+
+  const orderLineItems = computed(() => {
+    const items = [...subtotalLineItems.value]
+
+    if (workshopDiscount.value > 0) {
+      items.push({
+        id: 'vip-workshop-discount',
+        category: 'discount',
+        label: 'Workshop discount (VIP 10%)',
+        quantity: 1,
+        unitPrice: -workshopDiscount.value,
+        subtotal: -workshopDiscount.value,
+        total: -workshopDiscount.value,
+      })
+    }
+
+    return items
+  })
+
+  const orderTotal = computed(() =>
+    orderLineItems.value.reduce((total, item) => total + item.total, 0),
+  )
+
   const sessionConflicts = computed(() => findTimeConflicts(selectedSessions.value))
 
   const workshopConflicts = computed(() =>
@@ -197,6 +287,14 @@ export function useRegistrationWizard() {
     selectedMeals,
     selectedMerchandise,
     hasMerchandiseSelected,
+    ticketLineItem,
+    workshopLineItems,
+    mealLineItems,
+    merchandiseLineItems,
+    subtotalLineItems,
+    workshopDiscount,
+    orderLineItems,
+    orderTotal,
     sessionConflicts,
     workshopConflicts,
     validationResult,

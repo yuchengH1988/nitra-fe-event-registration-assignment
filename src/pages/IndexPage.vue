@@ -1,5 +1,6 @@
 <script setup>
 import FormStepOne from 'src/components/registration/FormStepOne.vue'
+import FormStepThree from 'src/components/registration/addons/FormStepThree.vue'
 import FormStepTwo from 'src/components/registration/sessions/FormStepTwo.vue'
 import ProcessBar from 'src/components/registration/ProcessBar.vue'
 import WizardFooter from 'src/components/registration/WizardFooter.vue'
@@ -26,6 +27,16 @@ const wizard = useRegistrationWizard()
           v-else-if="wizard.currentStep.value === 2"
           v-model:selected-session-ids="wizard.registration.selectedSessionIds"
           :grouped-sessions="wizard.groupedSessions.value"
+        />
+        <FormStepThree
+          v-else-if="wizard.currentStep.value === 3"
+          v-model:selected-addons="wizard.registration.selectedAddons"
+          :workshops="wizard.workshops.value"
+          :meals="wizard.meals.value"
+          :merchandise="wizard.merchandise.value"
+          :selected-sessions="wizard.selectedSessions.value"
+          :order-line-items="wizard.orderLineItems.value"
+          :order-total="wizard.orderTotal.value"
         />
         <section
           v-else

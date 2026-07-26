@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import checkIconUrl from 'src/assets/icons/check.svg'
+import SelectableCardFrame from '../shared/SelectableCardFrame.vue'
 import { orange } from 'src/unocss/colors.js'
 import {
   formatSessionTimeRange,
@@ -81,19 +82,20 @@ const trackLabel = computed(() =>
 </script>
 
 <template>
-  <button
-    type="button"
+  <SelectableCardFrame
     class="session-card rounded bg-surface-l0 p-3 tablet:p-4 text-left transition-colors space-y-2"
     :class="[
       trackClass,
-      selected ? 'session-card--selected bg-brand-subtle-rest' : '',
       disabled ? 'session-card--disabled' : '',
       full ? 'session-card--full' : '',
     ]"
     :style="cardStyle"
+    :selected="selected"
     :disabled="disabled"
-    :aria-pressed="selected"
-    @click="$emit('toggle')"
+    default-surface="bg-surface-l0"
+    selected-surface="bg-brand-muted-rest"
+    padding-class="p-3 tablet:p-4"
+    @press="$emit('toggle')"
   >
     <span class="flex items-center justify-between">
       <span class="track-badge text-xs-b">
@@ -141,7 +143,7 @@ const trackLabel = computed(() =>
     >
       {{ full ? 'Sold Out' : `${remaining} spots left` }}
     </span>
-  </button>
+  </SelectableCardFrame>
 </template>
 
 <style scoped>
@@ -159,27 +161,6 @@ const trackLabel = computed(() =>
   --session-title-text: var(--text-neutral);
 
   background: var(--session-card-bg);
-  border: 2px solid transparent;
-  box-shadow:
-    0 1px 3px 0 #0000000a,
-    0 4px 16px 0 #00000014,
-    0 0 0 1px var(--border-neutral-muted);
-}
-
-.session-card:hover:not(:disabled),
-.session-card:focus-visible:not(:disabled) {
-  border-color: var(--border-brand-muted);
-  outline: none;
-}
-
-.session-card--selected,
-.session-card--selected:hover:not(:disabled),
-.session-card--selected:focus-visible:not(:disabled) {
-  border-color: var(--border-brand-emphasis);
-  background: var(--bg-brand-muted-rest);
-  box-shadow:
-    0 1px 3px 0 #0000000a,
-    0 4px 16px 0 #00000014;
 }
 
 .session-card--disabled {

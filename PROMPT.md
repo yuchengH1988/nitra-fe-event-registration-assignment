@@ -138,3 +138,30 @@ Implementation notes:
 3. Disabled badge background is transparent and uses muted text.
 4. Disabled checkbox border is transparent, so the empty box frame is visually removed.
 5. Disabled capacity bar and availability text use warning semantic color.
+
+## 2026-07-26 Step 3 Add-ons UI
+
+User prompt summary:
+
+```text
+完成第三階段表單。
+希望三階段的卡片外框樣式抽成共用組件，因為 hover/select 樣式相同。
+注意第一階段是單選且預設灰底，第二階段是多選且預設白底。
+```
+
+Implementation notes:
+
+1. Added `SelectableCardFrame.vue` as the shared card shell for border, shadow, hover, selected, disabled behavior.
+2. Refactored ticket and session cards to use the shared card frame while preserving different default surfaces:
+   - Step 1 ticket cards default to `bg-surface-l1`.
+   - Step 2 session cards default to `bg-surface-l0`.
+3. Added Step 3 add-ons UI with focused components:
+   - `FormStepThree.vue`
+   - `AddonCategoryTabs.vue`
+   - `WorkshopOptionCard.vue`
+   - `MealOptionCard.vue`
+   - `MerchandiseOptionCard.vue`
+   - `QuantityStepper.vue`
+   - `OrderSummary.vue`
+4. Added derived order pricing in `useRegistrationWizard.js`, including ticket, workshops, meals, merchandise, VIP workshop discount, and total.
+5. Merchandise cards use the shared frame in non-interactive mode because they contain nested controls such as selects and quantity buttons.
