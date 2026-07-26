@@ -27,6 +27,10 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  stepErrors: {
+    type: Array,
+    default: () => [],
+  },
 })
 
 const { t } = useI18n()
@@ -37,16 +41,13 @@ const shippingAddressLabel = computed(() =>
     : t('form.shippingAddressOptional'),
 )
 
-const shippingAddressError = computed(() => {
-  const shouldRequireAddress =
-    props.hasMerchandiseSelected &&
-    props.showValidation &&
-    !attendee.value.shippingAddress.trim()
+function fieldError(field) {
+  if (!props.showValidation) return ''
 
-  return shouldRequireAddress
-    ? t('validation.REQUIRED_SHIPPING_ADDRESS')
-    : ''
-})
+  const error = props.stepErrors.find((item) => item.field === field)
+
+  return error ? t(`validation.${error.code}`) : ''
+}
 </script>
 
 <template>
@@ -78,6 +79,7 @@ const shippingAddressError = computed(() => {
           :label="t('form.fullName')"
           autocomplete="name"
           :placeholder="t('form.placeholders.fullName')"
+          :error="fieldError('fullName')"
         />
 
         <FormField
@@ -86,6 +88,7 @@ const shippingAddressError = computed(() => {
           type="email"
           autocomplete="email"
           :placeholder="t('form.placeholders.email')"
+          :error="fieldError('email')"
         />
 
         <FormField
@@ -94,6 +97,7 @@ const shippingAddressError = computed(() => {
           type="tel"
           autocomplete="tel"
           :placeholder="t('form.placeholders.phone')"
+          :error="fieldError('phone')"
         />
 
         <FormField
@@ -101,6 +105,7 @@ const shippingAddressError = computed(() => {
           :label="t('form.company')"
           autocomplete="organization"
           :placeholder="t('form.placeholders.company')"
+          :error="fieldError('company')"
         />
 
         <FormField
@@ -108,6 +113,7 @@ const shippingAddressError = computed(() => {
           :label="t('form.jobTitle')"
           autocomplete="organization-title"
           :placeholder="t('form.placeholders.jobTitle')"
+          :error="fieldError('jobTitle')"
           wide
         />
 
@@ -115,7 +121,7 @@ const shippingAddressError = computed(() => {
           v-model="attendee.shippingAddress"
           :label="shippingAddressLabel"
           :required="hasMerchandiseSelected"
-          :error="shippingAddressError"
+          :error="fieldError('shippingAddress')"
           autocomplete="shipping street-address"
           :placeholder="t('form.placeholders.shippingAddress')"
           wide

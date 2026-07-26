@@ -42,6 +42,7 @@ const { t } = useI18n()
           :ticket-types="wizard.ticketTypes.value"
           :has-merchandise-selected="wizard.hasMerchandiseSelected.value"
           :show-validation="wizard.hasAttemptedSubmit.value"
+          :step-errors="wizard.visibleValidationResult.value.byStep[1]"
         />
         <FormStepTwo
           v-else-if="wizard.currentStep.value === 2"

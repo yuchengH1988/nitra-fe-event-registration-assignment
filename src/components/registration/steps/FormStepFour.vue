@@ -106,19 +106,22 @@ function getFieldErrorCode(field) {
 }
 
 function getReviewFieldValue(value, field) {
-  if (value) return value
-
+  const trimmed = String(value ?? '').trim()
   const code = getFieldErrorCode(field)
 
-  if (code === 'REQUIRED_SHIPPING_ADDRESS') {
-    return t('review.fieldRequiredForMerchandise')
+  if (!trimmed) {
+    if (code === 'REQUIRED_SHIPPING_ADDRESS') {
+      return t('review.fieldRequiredForMerchandise')
+    }
+
+    if (code.startsWith('REQUIRED_')) {
+      return t('review.fieldRequired')
+    }
+
+    return t('common.empty')
   }
 
-  if (code.startsWith('REQUIRED_')) {
-    return t('review.fieldRequired')
-  }
-
-  return t('common.empty')
+  return trimmed
 }
 
 function getStepErrors(step) {
@@ -164,7 +167,10 @@ function getStepErrors(step) {
             :class="getFieldError(field) ? 'text-danger' : 'text-neutral'"
           >
             {{ getReviewFieldValue(value, field) }}
-            <span v-if="value && getFieldError(field)" class="ml-2">
+            <span
+              v-if="String(value ?? '').trim() && getFieldError(field)"
+              class="ml-2"
+            >
               — {{ t(`validation.${getFieldErrorCode(field)}`) }}
             </span>
           </dd>

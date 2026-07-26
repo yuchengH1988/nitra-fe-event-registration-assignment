@@ -60,7 +60,7 @@ defineProps({
     <span
       v-if="error"
       :id="`${label.replaceAll(' ', '-').toLowerCase()}-error`"
-      class="text-lg font-regular text-danger"
+      class="text-xs text-danger"
     >
       {{ error }}
     </span>
